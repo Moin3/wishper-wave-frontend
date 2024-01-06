@@ -6,7 +6,6 @@ export const AccountContext=createContext(null);
 
 const AccountProvider = ({children}) => {
 
-    const [account,setAccount]=useState()
     const [token,setToken]=useState(null)
     const [user,setUser]=useState(JSON.parse(localStorage.getItem('user')) || null)
     const [loading,setLoading]=useState(true)
@@ -32,8 +31,6 @@ const AccountProvider = ({children}) => {
 
   return (
     <AccountContext.Provider value={{
-        account,
-        setAccount,
         token,
         setToken,
         user,
