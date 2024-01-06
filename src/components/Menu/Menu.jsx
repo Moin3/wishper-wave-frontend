@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
-import { AccountContext } from '../../context/AccountProvider';
+import { userAuth } from '../../context/AccountProvider';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -18,22 +17,27 @@ import Toolbar from '@mui/material/Toolbar';
 import ProfileSettings from '../chat/ProfileSettings';
 import {styled} from '@mui/material/';
 import SearchMenu from '../search/SearchMenu';
+import { Link } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom'
+
+
 
 
 
 const drawerWidth = 240;
 
 const ChattingHeader=styled(AppBar)`
-     background: rgba(4, 60, 245, 0.26);
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(5px);
--webkit-backdrop-filter: blur(5px);
+    background: rgba(4, 60, 245, 0.26);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 
 `
 
 
 const Menu = () => {
-const {account}=useContext(AccountContext)
+    const {user}=userAuth()
+    const navigate=useNavigate()
 
    const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -44,7 +48,9 @@ const {account}=useContext(AccountContext)
   const drawer = (
     <div>
       <Toolbar sx={{display:'flex',justifyContent:'center',alignItems:'center',fontWeight:500,fontFamily:'Acme',textTransform:'uppercase'}}>
-        {account.name}
+        <Link to='/'>
+          {user && user.first_name}
+        </Link>
       </Toolbar>
       <Toolbar sx={{display:'flex',justifyContent:'center',alignItems:'center',fontWeight:500,fontFamily:'Acme',textTransform:'uppercase'}}>
         <SearchMenu/>
@@ -78,6 +84,7 @@ const {account}=useContext(AccountContext)
     </div>
   );
 
+
     
   return (  
     <>
@@ -86,7 +93,6 @@ const {account}=useContext(AccountContext)
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          // bgcolor:'gray',
           boxShadow:'none'
         }}
       >

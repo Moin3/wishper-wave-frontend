@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -12,6 +13,11 @@ import Divider from '@mui/material/Divider'
 import WebLogo from '../components/reusable/WebLogo';
 import CustomBtn from '../components/reusable/CustomBtn';
 import GoogleCustomLogin from '../components/reusable/GoogleCustomLogin';
+import {  postAPI } from '../services/api';
+import {useNavigate} from 'react-router-dom'
+
+import toast from 'react-hot-toast'
+import { userAuth } from '../context/AccountProvider';
 
 
 
@@ -20,14 +26,44 @@ import GoogleCustomLogin from '../components/reusable/GoogleCustomLogin';
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const navigate=useNavigate()
+  const {user,token}=userAuth()
+  const initialState={first_name:'',last_name:'',email:'',password:''}
+  const [userSignUp,setUserSignUp]=useState(initialState)
+  const {first_name,last_name,email,password}=userSignUp
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserSignUp({...userSignUp,[name]:value})
   };
+
+  const handleSubmit =async (event) => {
+    event.preventDefault();
+    // setUserSignUp(initialState)
+   try{
+    if(first_name && last_name && email && password){
+      const signUpUser=await postAPI('/signup',userSignUp)
+      const response=signUpUser.data
+      if(response.success){
+        toast.success(response.msg)
+        navigate('/signin')
+      }
+    }else{
+      toast.error('Fill up all field')
+    }
+   }catch(err){
+    toast.error(err.response.data.msg)
+   }
+  };
+
+
+
+  React.useEffect(()=>{
+    if(user && token){
+      navigate('/')
+    }
+  },[token,user])
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -50,7 +86,9 @@ export default function SignUp() {
                 <TextField
                   size="small"
                   autoComplete="given-name"
-                  name="firstName"
+                  name="first_name"
+                  value={first_name}
+                  onChange={handleChange}
                   required
                   fullWidth
                   id="firstName"
@@ -64,7 +102,9 @@ export default function SignUp() {
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="lastName"
+                  name="last_name"
+                  value={last_name}
+                  onChange={handleChange}
                   autoComplete="family-name"
                 />
               </Grid>
@@ -76,6 +116,8 @@ export default function SignUp() {
                   id="email"
                   label="Email Address"
                   name="email"
+                  value={email}
+                  onChange={handleChange}
                   autoComplete="email"
                 />
               </Grid>
@@ -85,6 +127,8 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="password"
+                  value={password}
+                  onChange={handleChange}
                   label="Password"
                   type="password"
                   id="password"

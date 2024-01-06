@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
-import { AccountContext } from '../../context/AccountProvider';
+import { userAuth } from '../../context/AccountProvider';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -23,6 +22,7 @@ const UserName=styled(Typography)`
   background: linear-gradient(to right, #bf2ecf 27%, #245ded 100%);
   font-size: 2rem;
   color: #ffffff;
+  text-transform: capitalize;
 
 `
  
@@ -30,7 +30,8 @@ const drawerWidth = 240;
 
 const EmptyChatBox = () => {
 
-    const {account}=useContext(AccountContext)
+  const {user}=userAuth()
+
   return (
     <Box
         component="main"
@@ -42,7 +43,7 @@ const EmptyChatBox = () => {
                       <Box sx={{display:'flex',justifyContent:'center',alignItems:'center'}}>
                       <Typography sx={{fontFamily:'acme',fontSize:'5rem',mb:3,mr:2}}>Hi,</Typography>
                       <UserName gutterBottom variant="h5" component="div" align="center" sx={{fontFamily:'acme',fontSize:'2rem',px:'15px',py:'5px',borderRadius:'5px'}}>
-                          {account.name}
+                        {user?.first_name} {user?.last_name}
                       </UserName>
                       </Box>
                     <WelcomeText sx={{fontFamily:'Acme',textAlign:'center'}}>

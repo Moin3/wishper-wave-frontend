@@ -1,20 +1,21 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import EmptyChatBox from '../components/chat/EmptyChatBox';
 import Menu from '../components/menu/menu';
+import SingleProfile from '../components/profile/SingleProfile';
 
 
-function ChattingPage(props) {
+function Profile(props) {
+  
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <Menu/>
-      <EmptyChatBox/>
+      <SingleProfile/>
     </Box>
   );
 }
 
 
-export default ChattingPage;
+export default Profile;

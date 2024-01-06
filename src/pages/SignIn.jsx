@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -12,7 +13,11 @@ import ColorToggleButton from '../components/reusable/AuthPageBtn';
 import Copyright from '../components/reusable/Copyright';
 import CustomBtn from '../components/reusable/CustomBtn';
 import GoogleCustomLogin from '../components/reusable/GoogleCustomLogin';
+import {useNavigate} from 'react-router-dom'
+import { postAPI } from '../services/api';
 
+import toast from 'react-hot-toast'
+import { userAuth } from '../context/AccountProvider';
 
 
 
@@ -20,15 +25,54 @@ import GoogleCustomLogin from '../components/reusable/GoogleCustomLogin';
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const navigate=useNavigate()
+  const {setToken,setUser,user,token}=userAuth()
+  const initialState={email:'',password:''}
+  const [userSignIn,setUserSignin]=useState(initialState)
+  const {email,password}=userSignIn
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-        email: data.get('email'),
-        password: data.get('password'),
-        });
-    };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserSignin({...userSignIn,[name]:value})
+  };
+
+
+  const handleSubmit =async (event) => {
+    event.preventDefault();
+    // setUserSignin(initialState)
+   try{
+      if(email && password){
+        const signInUser=await postAPI('/signin',userSignIn)
+        const response=signInUser.data
+          if(response.success){
+            toast.success(response.msg)
+            navigate('/')
+            localStorage.setItem('token',JSON.stringify(response.token))
+            localStorage.setItem('user',JSON.stringify(response.user))
+            setToken(response.token)
+            setUser(response.user)
+          }
+      }else{
+        toast.error('Fill up all field')
+      }
+   }catch(err){
+    toast.error(err.response.data.msg)
+   }
+    
+  };
+
+
+  
+
+  React.useEffect(()=>{
+    if(user && token){
+      navigate('/')
+    }
+  },[token,user])
+
+
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -54,6 +98,8 @@ export default function SignIn() {
               id="email"
               label="Email Address"
               name="email"
+              value={email}
+              onChange={handleChange}
               autoComplete="email"
             />
             <TextField
@@ -62,6 +108,8 @@ export default function SignIn() {
               required
               fullWidth
               name="password"
+              value={password}
+              onChange={handleChange}
               label="Password"
               type="password"
               id="password"
