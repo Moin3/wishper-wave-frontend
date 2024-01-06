@@ -5,22 +5,15 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import List from '@mui/material/List';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemButton from '@mui/material/ListItemButton';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import ListItemText from '@mui/material/ListItemText';
-// import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import ProfileSettings from '../chat/ProfileSettings';
 import {styled} from '@mui/material/';
 import SearchMenu from '../search/SearchMenu';
 import { Link } from 'react-router-dom';
-import {useNavigate} from 'react-router-dom'
 import { getAPI } from '../../services/api';
 import Conversations from './Conversations';
+import {toast} from 'react-hot-toast'
 
 
 
@@ -29,7 +22,7 @@ import Conversations from './Conversations';
 const drawerWidth = 240;
 
 const ChattingHeader=styled(AppBar)`
-    background: rgba(4, 60, 245, 0.26);
+    background: purple;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
@@ -41,7 +34,6 @@ const Menu = () => {
     const {user}=userAuth()
     const [users, setUsers] = React.useState([]);
 
-    const navigate=useNavigate()
 
    const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -52,7 +44,7 @@ const Menu = () => {
   const drawer = (
     <div>
       <Toolbar sx={{display:'flex',justifyContent:'center',alignItems:'center',fontWeight:500,fontFamily:'Acme',textTransform:'uppercase'}}>
-        <Link to='/'>
+        <Link onClick={()=>window.location.reload()}>
           {user && user.first_name}
         </Link>
       </Toolbar>
@@ -60,20 +52,14 @@ const Menu = () => {
         <SearchMenu/>
       </Toolbar>
       <Divider />
+      {
+        users?.map((userData,index)=>(
+          userData.email !==user.email && 
+            <Conversations key={index} users={userData} handleDrawerToggle={handleDrawerToggle}/>
 
-      {/* <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
-      <Conversations users={users}/>
+        ))
+      }
+      
     </div>
   );
 
@@ -87,7 +73,7 @@ const Menu = () => {
       let usersData=allUsers.data
       setUsers(usersData)
      }catch(err){
-console.log(err.message)
+      toast.error(err.message)
      }
       
   }

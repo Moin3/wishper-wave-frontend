@@ -12,10 +12,45 @@ import MenuItem from '@mui/material/MenuItem';
 import {Link} from 'react-router-dom'
 import Modal from '../reusable/Modal';
 
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
+import { userInfo } from '../../context/UserProvider';
+
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    backgroundColor: '#44b700',
+    color: '#44b700',
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    '&::after': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      borderRadius: '50%',
+      animation: 'ripple 1.2s infinite ease-in-out',
+      border: '1px solid currentColor',
+      content: '""',
+    },
+  },
+  '@keyframes ripple': {
+    '0%': {
+      transform: 'scale(.8)',
+      opacity: 1,
+    },
+    '100%': {
+      transform: 'scale(2.4)',
+      opacity: 0,
+    },
+  },
+}));
+
 
 
 function ProfileSettings() {
   const {user}=userAuth()
+  const {person}=userInfo()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -42,9 +77,26 @@ function ProfileSettings() {
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Profile information">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={`${user?.avatar}`} />
-              </IconButton>
+              <Box sx={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                  {
+                    person ? 
+                    ( <Typography sx={{textTransform:'capitalize',color:'black',mr:2,color:'white'}}>{person?.first_name} {person?.last_name}</Typography>) 
+                    : (<Typography sx={{textTransform:'capitalize',color:'black',mr:2,color:'white'}}>{user?.first_name} {user?.last_name}</Typography>)
+                  }
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <StyledBadge
+                      overlap="circular"
+                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                      variant="dot"
+                    >
+                      {
+                        person ? 
+                        ( <Avatar alt="Remy Sharp" sx={{bgcolor:'white'}} src={`${person?.avatar}`} />) 
+                        : (<Avatar alt="Remy Sharp" sx={{bgcolor:'white'}} src={`${user?.avatar}`} />)
+                      }
+                    </StyledBadge>
+                </IconButton>
+              </Box>
             </Tooltip>
             <Menu
               sx={{ mt: '45px'}}
@@ -62,14 +114,27 @@ function ProfileSettings() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-                <Link to='/profile' style={{textDecoration:'none',color:'#4a4a4a'}} >
+              {
+                person ? (
+                  <Link to='/profile' style={{textDecoration:'none',color:'#4a4a4a'}} >
                   <MenuItem  onClick={handleCloseUserMenu} sx={{px:7}}>
                     <Typography textAlign="center">Profile</Typography>
                   </MenuItem>
                 </Link>
-                  <MenuItem  onClick={handleOpenModal} sx={{px:7}}>
-                    <Typography textAlign="center">Logout</Typography>
-                  </MenuItem>
+                ) : (
+                  <>
+                    <Link to='/profile' style={{textDecoration:'none',color:'#4a4a4a'}} >
+                      <MenuItem  onClick={handleCloseUserMenu} sx={{px:7}}>
+                        <Typography textAlign="center">Profile</Typography>
+                      </MenuItem>
+                    </Link>
+                      <MenuItem  onClick={handleOpenModal} sx={{px:7}}>
+                        <Typography textAlign="center">Logout</Typography>
+                      </MenuItem>
+                  </>
+                )
+              }
+                
             </Menu>
           </Box>
         </Toolbar>

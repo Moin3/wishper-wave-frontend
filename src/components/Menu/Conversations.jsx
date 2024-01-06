@@ -4,29 +4,36 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Avatar from '@mui/material/Avatar'
+import { userInfo } from '../../context/UserProvider';
+import { Link } from 'react-router-dom';
 
 
-const Conversations = ({users}) => {
+const Conversations = ({users,handleDrawerToggle}) => {
+    const {setPerson} =userInfo()
+
+    const getUser = async () => {
+        setPerson(users);
+        handleDrawerToggle()
+        
+    }
   return (
-    <List>
-        {users?.map((user, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <Avatar
-                    alt="Remy Sharp"
-                    src={user?.avatar}
-                    sx={{ width: 24, height: 24 }}
-                />
-              </ListItemIcon>
-              <ListItemText sx={{textTransform:'capitalize'}} primary={`${user?.first_name} ${user?.last_name}`} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+        <List>
+          <Link to={'/'} style={{textDecoration:'none',color:'black'}}>
+            <ListItem disablePadding>
+                <ListItemButton onClick={() => getUser()}>
+                <ListItemIcon>
+                    <Avatar
+                        alt="Remy Sharp"
+                        src={users?.avatar}
+                        sx={{ width: 24, height: 24 }}
+                    />
+                </ListItemIcon>
+                <ListItemText sx={{textTransform:'capitalize'}} primary={`${users?.first_name} ${users?.last_name}`} />
+                </ListItemButton>
+            </ListItem>
+          </Link>
+        </List>
   )
 }
 
