@@ -12,8 +12,10 @@ import {styled} from '@mui/material/';
 import SearchMenu from '../search/SearchMenu';
 import { Link } from 'react-router-dom';
 import { getAPI } from '../../services/api';
-import Conversations from './Conversations';
 import {toast} from 'react-hot-toast'
+import Conversations from './Conversations';
+
+
 
 
 
@@ -30,9 +32,12 @@ const ChattingHeader=styled(AppBar)`
 `
 
 
-const Menu = () => {
+const Menus = () => {
     const {user}=userAuth()
     const [users, setUsers] = React.useState([]);
+    const [searchText,setSearchText]=React.useState('')
+
+    
 
 
    const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -49,13 +54,15 @@ const Menu = () => {
         </Link>
       </Toolbar>
       <Toolbar sx={{display:'flex',justifyContent:'center',alignItems:'center',fontWeight:500,fontFamily:'Acme',textTransform:'uppercase'}}>
-        <SearchMenu/>
+        <SearchMenu setSearchText={setSearchText}/>  {/*search functionality*/}
       </Toolbar>
       <Divider />
       {
         users?.map((userData,index)=>(
           userData.email !==user.email && 
-            <Conversations key={index} users={userData} handleDrawerToggle={handleDrawerToggle}/>
+          (  
+            <Conversations users={userData} index={index} handleDrawerToggle={handleDrawerToggle}/>          
+          )
 
         ))
       }
@@ -71,17 +78,20 @@ const Menu = () => {
      try{
       let allUsers = await getAPI('/all_users')
       let usersData=allUsers.data
-      setUsers(usersData)
+      let fiteredData = usersData.filter(userDetail => 
+        `${userDetail.first_name} ${userDetail.last_name}`.toLowerCase().includes(searchText.toLocaleLowerCase())
+      );      
+      setUsers(fiteredData)
      }catch(err){
       toast.error(err.message)
      }
       
   }
   fetchData();
-  }, []);
+  }, [searchText]);
     
   return (  
-    <>
+    <Box>
       <ChattingHeader
         position="fixed"
         sx={{
@@ -90,7 +100,6 @@ const Menu = () => {
           boxShadow:'none'
         }}
       >
-
         <Toolbar>
           <IconButton
             color="inherit"
@@ -137,8 +146,8 @@ const Menu = () => {
             {drawer}
           </Drawer>
         </Box>
-    </>
+    </Box>
   )
 }
 
-export default Menu
+export default Menus

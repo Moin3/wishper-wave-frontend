@@ -2,25 +2,21 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import EmptyChatBox from '../components/chat/EmptyChatBox';
-import Menu from '../components/menu/menu';
 import ChatBox from '../components/chat/ChatBox';
 import { userInfo } from '../context/UserProvider';
-import Footer from '../components/chat/Footer';
+import Menus from '../components/menu/Menus';
 
-const drawerWidth = 240;
 function ChattingPage(props) {
   const {person}=userInfo()
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-        <Menu/>
+        <Menus/>
           {
             person ? 
             (
-              <>
                 <ChatBox/> 
-              </>
             )
             : (<EmptyChatBox/>)
           }

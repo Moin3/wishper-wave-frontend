@@ -41,6 +41,7 @@ const Footer = () => {
 
 
     return (
+        
         <Container>
             <EmojiEmotions />
             <label htmlFor="fileInput">

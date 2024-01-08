@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
-import {styled, Typography} from '@mui/material';
+import {Typography} from '@mui/material';
 import Footer from './Footer';
 
 

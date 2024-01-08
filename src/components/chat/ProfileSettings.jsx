@@ -73,15 +73,15 @@ function ProfileSettings() {
   };
 
   return (
-    <>
+    <div>
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Profile information">
               <Box sx={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
                   {
                     person ? 
-                    ( <Typography sx={{textTransform:'capitalize',color:'black',mr:2,color:'white'}}>{person?.first_name} {person?.last_name}</Typography>) 
-                    : (<Typography sx={{textTransform:'capitalize',color:'black',mr:2,color:'white'}}>{user?.first_name} {user?.last_name}</Typography>)
+                    ( <Typography sx={{textTransform:'capitalize',mr:2,color:'white'}}>{person?.first_name} {person?.last_name}</Typography>) 
+                    : (<Typography sx={{textTransform:'capitalize',mr:2,color:'white'}}>{user?.first_name} {user?.last_name}</Typography>)
                   }
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <StyledBadge
@@ -116,22 +116,22 @@ function ProfileSettings() {
             >
               {
                 person ? (
-                  <Link to='/profile' style={{textDecoration:'none',color:'#4a4a4a'}} >
+                  <Link to='/profile' key="profileLink" style={{textDecoration:'none',color:'#4a4a4a'}} >
                   <MenuItem  onClick={handleCloseUserMenu} sx={{px:7}}>
                     <Typography textAlign="center">Profile</Typography>
                   </MenuItem>
                 </Link>
                 ) : (
-                  <>
-                    <Link to='/profile' style={{textDecoration:'none',color:'#4a4a4a'}} >
-                      <MenuItem  onClick={handleCloseUserMenu} sx={{px:7}}>
+                  <div>
+                    <Link to='/profile' key="profileLinks"  style={{textDecoration:'none',color:'#4a4a4a'}} >
+                      <MenuItem onClick={handleCloseUserMenu} sx={{px:7}}>
                         <Typography textAlign="center">Profile</Typography>
                       </MenuItem>
                     </Link>
-                      <MenuItem  onClick={handleOpenModal} sx={{px:7}}>
+                      <MenuItem key="logout" onClick={handleOpenModal} sx={{px:7}}>
                         <Typography textAlign="center">Logout</Typography>
                       </MenuItem>
-                  </>
+                  </div>
                 )
               }
                 
@@ -139,7 +139,7 @@ function ProfileSettings() {
           </Box>
         </Toolbar>
         <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
-        </>
+        </div>
   );
 }
 export default ProfileSettings;

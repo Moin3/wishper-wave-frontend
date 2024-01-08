@@ -7,21 +7,26 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar'
 import { userInfo } from '../../context/UserProvider';
 import { Link } from 'react-router-dom';
+import { postAPI } from '../../services/api';
+import { userAuth } from '../../context/AccountProvider';
 
 
-const Conversations = ({users,handleDrawerToggle}) => {
-    const {setPerson} =userInfo()
+const Conversations = ({users,index,handleDrawerToggle}) => {
+    const {person,setPerson} =userInfo()
+    const {user}=userAuth()
 
     const getUser = async () => {
         setPerson(users);
-        handleDrawerToggle()
+        // handleDrawerToggle()
+       await postAPI('/conversation/add',{senderId:user?._id,receiverId:users?._id})
         
     }
   return (
+    
         <List>
           <Link to={'/'} style={{textDecoration:'none',color:'black'}}>
-            <ListItem disablePadding>
-                <ListItemButton onClick={() => getUser()}>
+                <ListItem disablePadding key={index}>
+                <ListItemButton onClick={() => getUser()} >
                 <ListItemIcon>
                     <Avatar
                         alt="Remy Sharp"
@@ -32,8 +37,9 @@ const Conversations = ({users,handleDrawerToggle}) => {
                 <ListItemText sx={{textTransform:'capitalize'}} primary={`${users?.first_name} ${users?.last_name}`} />
                 </ListItemButton>
             </ListItem>
-          </Link>
+        </Link>
         </List>
+
   )
 }
 

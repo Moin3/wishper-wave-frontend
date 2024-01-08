@@ -3,8 +3,10 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+import TextField from '@mui/material/TextField';
 
-export default function SearchMenu() {
+
+export default function SearchMenu({setSearchText}) {
   return (
     <Paper
       component="form"
@@ -13,6 +15,7 @@ export default function SearchMenu() {
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         placeholder="Search Friend"
+        onChange={(e)=>setSearchText(e.target.value)}
       />
       <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
         <SearchIcon />
