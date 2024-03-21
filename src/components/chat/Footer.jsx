@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import { userMsg } from '../../context/MsgProvider';
 import { userAuth } from '../../context/AccountProvider';
 import { userInfo } from '../../context/UserProvider';
-import { getAPI, postAPI } from '../../services/api';
+import { postAPI } from '../../services/api';
 import {toast} from 'react-hot-toast'
 import { useEffect, useState } from 'react';
 
@@ -44,7 +44,7 @@ const ClipIcon = styled(AttachFile)`
 
 
 const Footer = ({conversationId}) => {
-    const {msgText,setMsgText,setMainImgUrl}=userMsg()
+    const {msgText,setMsgText}=userMsg()
     const {user}=userAuth()
     const {person}=userInfo()
      const [file,setFile]=useState()
@@ -73,13 +73,9 @@ const Footer = ({conversationId}) => {
                 text:image
             }
         }
-        console.log(image)
+
         const response=await postAPI('/message/add',message)
         const isolatedMsg=response.data
-        setMainImgUrl(isolatedMsg.newMessage.text)
-        // setImgId(isolatedMsg.newMessage._id)
-        // console.log("imgId",imgId)
-        // fetchImage(isolatedMsg.newMessage._id);
         toast.success(isolatedMsg.msg)
 
 
@@ -107,9 +103,7 @@ const Footer = ({conversationId}) => {
                     
                     try{
                         const response = await postAPI('/file/upload',datas)
-                        // setMainImgUrl(response.data.imageUrl)
                         setImage(response.data.imageUrl)
-                        // return response
                     }catch(err){
                         toast.error(err.message)
                     }

@@ -1,23 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Acme&family=Philosopher&family=Poppins:wght@400;500;600&display=swap');
 
-/* For WebKit Browsers (Chrome, Safari) */
-::-webkit-scrollbar {
-    width: 3px;
-    height:4px; /* Set the width of the scrollbar */
+
+  ::-webkit-scrollbar {
+    width: 2px; /* You can adjust the width as needed */
   }
   
   ::-webkit-scrollbar-thumb {
-    background-color: purple; /* Color of the thumb (the draggable part) */
-    border-radius: 5px; /* Round corners of the thumb */
+    background-color: purple;
+    border-radius: 2px; 
   }
   
-  ::-webkit-scrollbar-track {
-    background-color: #f1f1f1; /* Color of the track (the area behind the thumb) */
-  }
+
   
-  /* For Firefox */
+
   
-  body {
-    scrollbar-width: thin;
-    scrollbar-color: purple #f1f1f1;
-  }
+ 

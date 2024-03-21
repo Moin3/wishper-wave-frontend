@@ -5,9 +5,9 @@ import Link from '@mui/material/Link';
 const Copyright = (props) => {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
+            {'Developed by '}
                     <Link color="inherit" href="https://dev-moin.vercel.app/">
-                        DevMoin
+                    © DevMoin
                     </Link>{' '}
                 {new Date().getFullYear()}
             {'.'}
