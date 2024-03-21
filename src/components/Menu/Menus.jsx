@@ -59,9 +59,9 @@ const Menus = () => {
       <Divider />
       {
         users?.map((userData,index)=>(
-          userData.email !==user.email && 
+          userData?.email !== user?.email && 
           (  
-            <Conversations users={userData} index={index} handleDrawerToggle={handleDrawerToggle}/>          
+            <Conversations users={userData} index={index}/>          
           )
 
         ))
@@ -79,7 +79,7 @@ const Menus = () => {
       let allUsers = await getAPI('/all_users')
       let usersData=allUsers.data
       let fiteredData = usersData.filter(userDetail => 
-        `${userDetail.first_name} ${userDetail.last_name}`.toLowerCase().includes(searchText.toLocaleLowerCase())
+        `${userDetail?.first_name} ${userDetail?.last_name}`.toLowerCase().includes(searchText.toLocaleLowerCase())
       );      
       setUsers(fiteredData)
      }catch(err){

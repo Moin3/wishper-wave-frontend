@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -11,22 +11,24 @@ import { postAPI } from '../../services/api';
 import { userAuth } from '../../context/AccountProvider';
 
 
-const Conversations = ({users,index,handleDrawerToggle}) => {
-    const {person,setPerson} =userInfo()
+const Conversations = ({users,index}) => {
+    const {setPerson} =userInfo()
     const {user}=userAuth()
 
+
     const getUser = async () => {
+        await postAPI('/conversation/add',{senderId:user?._id,receiverId:users?._id})
         setPerson(users);
-        // handleDrawerToggle()
-       await postAPI('/conversation/add',{senderId:user?._id,receiverId:users?._id})
-        
+
     }
+
+
+
   return (
-    
         <List>
-          <Link to={'/'} style={{textDecoration:'none',color:'black'}}>
+          <Link to={'/'} style={{textDecoration:'none',color:'black'}} >
                 <ListItem disablePadding key={index}>
-                <ListItemButton onClick={() => getUser()} >
+                <ListItemButton onClick={ getUser} >
                 <ListItemIcon>
                     <Avatar
                         alt="Remy Sharp"

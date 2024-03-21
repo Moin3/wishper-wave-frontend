@@ -1,7 +1,13 @@
-import { useEffect } from 'react';
-
 import { EmojiEmotions, AttachFile, Mic } from '@mui/icons-material';
 import { Box, styled, InputBase } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import IconButton from '@mui/material/IconButton';
+import { userMsg } from '../../context/MsgProvider';
+import { userAuth } from '../../context/AccountProvider';
+import { userInfo } from '../../context/UserProvider';
+import { getAPI, postAPI } from '../../services/api';
+import {toast} from 'react-hot-toast'
+import { useEffect, useState } from 'react';
 
 
 const Container = styled(Box)`
@@ -37,29 +43,121 @@ const ClipIcon = styled(AttachFile)`
 `;
 
 
-const Footer = () => {
+const Footer = ({conversationId}) => {
+    const {msgText,setMsgText,setMainImgUrl}=userMsg()
+    const {user}=userAuth()
+    const {person}=userInfo()
+     const [file,setFile]=useState()
+    const [image,setImage]=useState('')
+
+
+    const handleMsgSend=async ()=>{
+        console.log(person)
+        try{
+            let message={}
+            if(!file){
+                message={
+                senderId:user._id,
+                recieverId:person._id,
+                conversationId:conversationId,
+                type:'text',
+                text:msgText
+            }
+            }
+            else{
+                message={
+                senderId:user._id,
+                recieverId:person._id,
+                conversationId:conversationId,
+                type:'file',
+                text:image
+            }
+        }
+        console.log(image)
+        const response=await postAPI('/message/add',message)
+        const isolatedMsg=response.data
+        setMainImgUrl(isolatedMsg.newMessage.text)
+        // setImgId(isolatedMsg.newMessage._id)
+        // console.log("imgId",imgId)
+        // fetchImage(isolatedMsg.newMessage._id);
+        toast.success(isolatedMsg.msg)
+
+
+        }catch(err){
+            toast.error(err.message)
+        }
+
+        setMsgText('')
+        setImage('')
+    }
+
+
+
+    const onFileChange = (e) => {
+        setFile(e.target.files[0]);
+        setMsgText(e.target.files[0].name);
+    }
+
+
+        useEffect(() => {
+        const getImage = async () => {
+                if (file) {
+                    const datas = new FormData();
+                    datas.append("file", file);
+                    
+                    try{
+                        const response = await postAPI('/file/upload',datas)
+                        // setMainImgUrl(response.data.imageUrl)
+                        setImage(response.data.imageUrl)
+                        // return response
+                    }catch(err){
+                        toast.error(err.message)
+                    }
+                }
+        }
+        getImage()
+    }, [file])
+
 
 
     return (
         
         <Container>
-            <EmojiEmotions />
-            <label htmlFor="fileInput">
-                <ClipIcon />
-            </label>
+            <IconButton sx={{cursor:'pointer'}} color="secondary">
+                <EmojiEmotions />
+            </IconButton>
+            <IconButton sx={{cursor:'pointer'}} color="secondary">
+                <label htmlFor="fileInput">
+                    <ClipIcon />
+                </label>
+            </IconButton> 
             <input
                 type='file'
                 id="fileInput"
                 style={{ display: 'none' }}
+                onChange={(e) => onFileChange(e)}
             />
 
             <Search>
                 <InputField
                     placeholder="Type a message"
                     inputProps={{ 'aria-label': 'search' }}
+                    onChange={(e)=>setMsgText(e.target.value)}
+                    value={msgText}
                 />
             </Search>
-            <Mic />
+            {
+                msgText ? 
+                (<IconButton sx={{cursor:'pointer'}} onClick={handleMsgSend} color="secondary">
+                    <SendIcon />
+                </IconButton>)
+                 : 
+                ( <IconButton sx={{cursor:'pointer'}} color="secondary">
+                    <Mic />
+                </IconButton>)
+                 
+            }
+            
         </Container>
     )
 }
