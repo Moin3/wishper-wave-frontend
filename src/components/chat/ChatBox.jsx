@@ -62,7 +62,7 @@ const ChatBox = () => {
         <Toolbar />
         <Box>
             {singleIsolatedMsg?.map((msg)=>(
-                <Box sx={{px:2,py:1}}>
+                <Box key={msg._id} sx={{px:2,py:1}}>
                     <Message message={msg}/>
                 </Box>
             ))}
