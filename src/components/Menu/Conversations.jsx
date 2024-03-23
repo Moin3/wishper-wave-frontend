@@ -39,11 +39,11 @@ const Conversations = ({users,index}) => {
                         sx={{ width: 24, height: 24 }}
                     />
                 </ListItemIcon>
-                <Box sx={{display:'flex',flexDirection:'column'}}>
+                <Box sx={{display:'flex',flexDirection:'column'}}>  
                     {/* <ListItemText sx={{textTransform:'capitalize'}} primary={`${users?.first_name} ${users?.last_name}`} /> */}
-                    <h6 sx={{fontSize:'l',textTransform:'capitalize',fontWeight:'bold'}}>
+                    <Typography sx={{fontSize:'l',textTransform:'capitalize',fontWeight:'bold'}}>
                          {`${users?.first_name} ${users?.last_name}`}
-                    </h6>
+                    </Typography>
                     <Typography sx={{mb:'0px',fontSize:'small',letterSpacing:'.5px',fontWeight:'semi-bold'}}>
                         {msgText.slice(0, 15) + '...'}
                     </Typography>
