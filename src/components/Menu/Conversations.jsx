@@ -13,52 +13,44 @@ import { Box, Typography } from '@mui/material';
 const Conversations = ({ users }) => {
   const { setPerson } = userInfo();
   const { user } = userAuth();
-  const {userMainInfo,setMainUserInfo}=useState()
-  const {recieverInfo,setRecieverInfo}=useState()
   const msgText = "The name of my country is Bangladesh";
-//   const moin=[].push(users)
-
-//   console.log(moin)
-
-console.log(users)
 
 
-  const getUser = async (receiverInfo) => {
-    console.log(receiverInfo)
-    
-        await postAPI('/conversation/add', { senderId: user?._id, receiverId: receiverInfo._id});
-        // setPerson([receiverInfo]);
+  const getUser = async (userData) => {
+    const response=await postAPI('/conversation/add', { senderId: user?._id, receiverId: userData?._id });
+    setPerson(userData);
+
   };
 
   return (
     <List>
-        {
-            users.map((userInfo,index)=>{
+        {users?.map((userData, index) => (
+            userData?.email !== user?.email && (
+            <ListItem key={index} disablePadding>
                 <Link to={'/'} style={{ textDecoration: 'none', color: 'black' }}>
-                <ListItem disablePadding key={index}>
-                  <ListItemButton onClick={getUser(userInfo)}>
+                <ListItemButton onClick={() => getUser(userData)}>
                     <ListItemIcon>
-                      <Avatar
+                    <Avatar
                         alt="Remy Sharp"
-                        src={userInfo?.avatar}
+                        src={userData?.avatar}
                         sx={{ width: 24, height: 24 }}
-                      />
+                    />
                     </ListItemIcon>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                      <Typography sx={{ textTransform: 'capitalize', fontWeight: 'bold' }}>
-                        {`${userInfo?.first_name} ${userInfo?.last_name}`}
-                      </Typography>
-                      <Typography sx={{ mb: '0px', fontSize: 'small', letterSpacing: '.5px', fontWeight: 'semi-bold' }}>
+                    <Typography sx={{ textTransform: 'capitalize', fontWeight: 'bold' }}>
+                        {`${userData?.first_name} ${userData?.last_name}`}
+                    </Typography>
+                    <Typography sx={{ fontSize: 'small', letterSpacing: '.5px', fontWeight: 'semi-bold' }}>
                         {msgText.slice(0, 15) + '...'}
-                      </Typography>
+                    </Typography>
                     </Box>
-                  </ListItemButton>
-                </ListItem>
-              </Link>
-            })
-        }
-
+                </ListItemButton>
+                </Link>
+            </ListItem>
+            )
+        ))}
     </List>
+
   );
 };
 

@@ -36,10 +36,6 @@ const Menus = () => {
     const {user}=userAuth()
     const [users, setUsers] = React.useState([]);
     const [searchText,setSearchText]=React.useState('')
-
-    
-
-
    const [mobileOpen, setMobileOpen] = React.useState(false);
 
    const handleDrawerToggle = () => {
@@ -57,17 +53,8 @@ const Menus = () => {
         <SearchMenu setSearchText={setSearchText}/>  {/*search functionality*/}
       </Toolbar>
       <Divider />
-      {/* {
-        users?.map((userData,index)=>(
-          userData?.email !== user?.email && 
-          (   */}
-            {/* <Conversations users={userData} index={index}/>           */}
-            <Conversations users={users} />          
-          {/* )
-
-        ))
-      } */}
-      
+      {/* conversation functionality */}
+      <Conversations users={users}/>          
     </div>
   );
 
