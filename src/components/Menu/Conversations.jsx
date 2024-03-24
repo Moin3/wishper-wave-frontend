@@ -27,7 +27,7 @@ console.log(users)
     console.log(receiverInfo)
     
         await postAPI('/conversation/add', { senderId: user?._id, receiverId: receiverInfo._id});
-        
+        // setPerson([receiverInfo]);
   };
 
   return (
