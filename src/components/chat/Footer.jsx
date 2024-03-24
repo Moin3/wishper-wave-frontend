@@ -47,7 +47,7 @@ const Footer = ({conversationId}) => {
     const {msgText,setMsgText}=userMsg()
     const {user}=userAuth()
     const {person}=userInfo()
-     const [file,setFile]=useState()
+     const [file,setFile]=useState(null)
     const [image,setImage]=useState('')
 
 
@@ -85,6 +85,7 @@ const Footer = ({conversationId}) => {
 
         setMsgText('')
         setImage('')
+        setFile(null)
     }
 
 
