@@ -30,12 +30,14 @@ const Conversations = ({ users }) => {
             <ListItem disablePadding>
               <ListItemButton
                 onClick={() => getUser(userData)}
-                // selected={selectedUser?._id === userData._id} // 
                 sx={{
-                    backgroundColor: selectedUser?._id === userData._id ? '#c4e0f5' : 'transparent', 
+                    backgroundColor: selectedUser?._id === userData._id ? '#c4e0f5' : '#f5f6f7', 
                     '&:hover': {
-                      backgroundColor: '#e0e0e0', // 
+                      backgroundColor: '#e0e0e0',
                     },
+                    borderRadius:'10px',
+                    my:'2px',
+                    mx:'5px'
                   }}
               >
                 <ListItemIcon>
@@ -50,7 +52,7 @@ const Conversations = ({ users }) => {
                     {`${userData?.first_name} ${userData?.last_name}`}
                   </Typography>
                   <Typography sx={{ fontSize: 'small', letterSpacing: '.5px', fontWeight: 'semi-bold' }}>
-                    {msgText.slice(0, 15) + '...'}
+                    {msgText.slice(0, 17) + '...'}
                   </Typography>
                 </Box>
               </ListItemButton>
