@@ -57,15 +57,16 @@ const Menus = () => {
         <SearchMenu setSearchText={setSearchText}/>  {/*search functionality*/}
       </Toolbar>
       <Divider />
-      {
+      {/* {
         users?.map((userData,index)=>(
           userData?.email !== user?.email && 
-          (  
-            <Conversations users={userData} index={index}/>          
-          )
+          (   */}
+            {/* <Conversations users={userData} index={index}/>           */}
+            <Conversations users={users} />          
+          {/* )
 
         ))
-      }
+      } */}
       
     </div>
   );
