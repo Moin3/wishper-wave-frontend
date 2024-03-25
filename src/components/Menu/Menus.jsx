@@ -8,7 +8,9 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import ProfileSettings from '../chat/ProfileSettings';
-import {styled} from '@mui/material/';
+import { TiHome } from "react-icons/ti";
+import { BiSolidExit } from "react-icons/bi";
+import {Typography, styled} from '@mui/material/';
 import SearchMenu from '../search/SearchMenu';
 import { Link } from 'react-router-dom';
 import { getAPI } from '../../services/api';
@@ -44,9 +46,16 @@ const Menus = () => {
     <div>
       <Toolbar sx={{display:'flex',justifyContent:'center',alignItems:'center',fontWeight:500,fontFamily:'Acme',textTransform:'uppercase'}}>
         {/* <Link onClick={()=>window.location.reload()}> */}
-        <Link onClick={()=>setPerson(null)} to={'/intro'}>
-          {user && user.first_name}
-        </Link>
+        <Box sx={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'space-around',alignItems:'space-between'}}>
+            <Link onClick={()=>setPerson(null)} to={'/intro'}>
+              <Typography sx={{fontSize:'30px',color:'black'}}>
+                <TiHome/>
+              </Typography>
+            </Link>
+            <Typography sx={{fontSize:'30px',color:'black'}}>
+              <BiSolidExit />
+            </Typography>
+        </Box>
       </Toolbar>
       <Toolbar sx={{display:'flex',justifyContent:'center',alignItems:'center',fontWeight:500,fontFamily:'Acme',textTransform:'uppercase'}}>
         <SearchMenu setSearchText={setSearchText}/>  {/*search functionality*/}
