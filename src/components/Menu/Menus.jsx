@@ -10,7 +10,7 @@ import Toolbar from '@mui/material/Toolbar';
 import ProfileSettings from '../chat/ProfileSettings';
 import { TiHome } from "react-icons/ti";
 import { BiSolidExit } from "react-icons/bi";
-import {Typography, styled} from '@mui/material/';
+import {Tooltip, Typography, styled} from '@mui/material/';
 import SearchMenu from '../search/SearchMenu';
 import { Link } from 'react-router-dom';
 import { getAPI } from '../../services/api';
@@ -56,19 +56,23 @@ const Menus = () => {
       <Toolbar>
         <Box sx={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'space-around',alignItems:'space-between'}}>
             <Link onClick={()=>setPerson(null)} to={'/intro'}>
+            <Tooltip title="Intro Page">
               <Typography sx={{fontSize:'30px',color:'black',
                     '&:hover': {
                       color: 'gray',
-                    }}}>
+                    }}}> 
                 <TiHome/>
               </Typography>
+            </Tooltip>
             </Link>
-            <Typography onClick={handleOpenModal} sx={{fontSize:'30px',color:'black',cursor:'pointer',
-                    '&:hover': {
-                      color: 'gray',
-                    }}}>
-                <BiSolidExit />
-            </Typography>
+            <Tooltip title="Logout">
+              <Typography onClick={handleOpenModal} sx={{fontSize:'30px',color:'black',cursor:'pointer',
+                      '&:hover': {
+                        color: 'gray',
+                      }}}>
+                  <BiSolidExit />
+              </Typography>
+            </Tooltip> 
         </Box>
       </Toolbar>
       <Toolbar sx={{display:'flex',justifyContent:'center',alignItems:'center',fontWeight:500,fontFamily:'Acme',textTransform:'uppercase'}}>
