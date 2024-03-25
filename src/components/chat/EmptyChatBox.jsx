@@ -1,63 +1,85 @@
 import * as React from 'react';
-import { userAuth } from '../../context/AccountProvider';
-import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {styled} from '@mui/material';
 
+import { keyFeature } from '../../utils/data';
+
 
 
 const WelcomeText=styled(Typography)`
-  background: #CF2EAF;
-  background: linear-gradient(to right, #CF2EAF 27%, #24AAED 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #577799;
   font-size: 2rem;
-`
-
-const UserName=styled(Typography)`
-  background: linear-gradient(to right, #bf2ecf 27%, #245ded 100%);
-  font-size: 2rem;
-  color: #ffffff;
-  text-transform: capitalize;
-
+  font-family:Quicksand;
+  text-align:center;
+  font-weight:600;
+  margin-top:20px;
 `
  
 const drawerWidth = 240;
 
-const EmptyChatBox = () => {
-
-  const {user}=userAuth()
-
+export default function EmptyChatBox() {
   return (
-    <Box
+
+        <Box
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
         <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',height:'100%'}}>
-            <Card sx={{ maxWidth: 900,display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
-                      <Box sx={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-                      <Typography sx={{fontFamily:'acme',fontSize:'5rem',mb:3,mr:2}}>Hi,</Typography>
-                      <UserName gutterBottom variant="h5" component="div" align="center" sx={{fontFamily:'acme',fontSize:'2rem',px:'15px',py:'5px',borderRadius:'5px'}}>
-                        {user?.first_name} {user?.last_name}
-                      </UserName>
-                      </Box>
-                    <WelcomeText sx={{fontFamily:'Acme',textAlign:'center'}}>
+              <Card sx={{ maxWidth: 900,display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+                    <WelcomeText>
                         Welcome to the WishperWave
                     </WelcomeText>
-                    <CardContent>
-                    <Typography variant="body2" color="text.secondary" sx={{fontFamily:'Philosopher',textAlign:'center',fontWeight:'900',fontSize:'15px'}}>
+                    <Typography variant="body2" color="text.secondary" sx={{fontWeight: '600',fontFamily:"Quicksand",textAlign:'justify',fontSize:'14px',px:7,mt:'15px'}}>
                       "WishperWave,A application that allows people to easily connect and communicate in real-time. The application should provide a seamless and enjoyable chatting experience, with features such as instant messaging, user authentication, and a clean, responsive interface. The goal is to foster smooth and efficient communication while maintaining a visually appealing and intuitive design."
                     </Typography>
+                    <CardContent>
+                        <WelcomeText sx={{fontSize:'1.5rem'}}>
+                          Key Features:
+                        </WelcomeText>
+                        <List sx={{ width: '100%', maxWidth: 1000,  bgcolor: 'background.paper' }}>
+                        {
+                          keyFeature.map((listOpt,index)=>(
+                            <>
+                              <ListItem key={index} sx={{display:'flex',flexWrap:"wrap",justifyContent:'center',alignItems:'center',}}>
+                                  <ListItemAvatar>
+                                    <Avatar sx={{ bgcolor: '#c4e0f5',color:'black' }}>{listOpt.icon}</Avatar>
+                                  </ListItemAvatar>
+                                  <ListItemText 
+                                    secondary={
+                                      <React.Fragment>
+                                        <Typography
+                                          sx={{ fontWeight: '600',fontFamily:"Quicksand",textAlign:{xs:'center',sm:'start'} }}
+                                          color="text.primary"
+                                        >
+                                          {listOpt.label}
+                                        </Typography>
+                                        <Typography sx={{fontWeight: '500',fontFamily:"Quicksand",textAlign:{xs:'center',sm:'start'}}} >
+                                           {listOpt.des}
+                                        </Typography>
+                                      </React.Fragment>
+                                    }
+                                  />
+                              </ListItem>
+                              <Divider variant="inset" component="li" />
+                           </>
+                          ))
+                        }
+                        </List> 
                     </CardContent>
-            </Card>
+               </Card>
         </Box>
       </Box>
-  )
+    
+  );
 }
-
-export default EmptyChatBox
