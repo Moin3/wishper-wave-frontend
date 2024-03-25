@@ -32,7 +32,6 @@ const ChattingHeader=styled(AppBar)`
 
 
 const Menus = () => {
-    const {user}=userAuth()
     const [users, setUsers] = React.useState([]);
     const { setPerson } = userInfo();
     const [searchText,setSearchText]=React.useState('')
@@ -44,8 +43,7 @@ const Menus = () => {
 
   const drawer = (
     <div>
-      <Toolbar sx={{display:'flex',justifyContent:'center',alignItems:'center',fontWeight:500,fontFamily:'Acme',textTransform:'uppercase'}}>
-        {/* <Link onClick={()=>window.location.reload()}> */}
+      <Toolbar>
         <Box sx={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'space-around',alignItems:'space-between'}}>
             <Link onClick={()=>setPerson(null)} to={'/intro'}>
               <Typography sx={{fontSize:'30px',color:'black'}}>
