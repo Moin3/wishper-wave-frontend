@@ -14,10 +14,7 @@ import { Link } from 'react-router-dom';
 import { getAPI } from '../../services/api';
 import {toast} from 'react-hot-toast'
 import Conversations from './Conversations';
-
-
-
-
+import { userInfo } from '../../context/UserProvider';
 
 
 
@@ -29,17 +26,15 @@ const ChattingHeader=styled(AppBar)`
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border-radius:10px;
-    
-   
-
 `
 
 
 const Menus = () => {
     const {user}=userAuth()
     const [users, setUsers] = React.useState([]);
+    const { setPerson } = userInfo();
     const [searchText,setSearchText]=React.useState('')
-   const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [mobileOpen, setMobileOpen] = React.useState(false);
 
    const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -48,7 +43,8 @@ const Menus = () => {
   const drawer = (
     <div>
       <Toolbar sx={{display:'flex',justifyContent:'center',alignItems:'center',fontWeight:500,fontFamily:'Acme',textTransform:'uppercase'}}>
-        <Link onClick={()=>window.location.reload()}>
+        {/* <Link onClick={()=>window.location.reload()}> */}
+        <Link onClick={()=>setPerson(null)} to={'/intro'}>
           {user && user.first_name}
         </Link>
       </Toolbar>
