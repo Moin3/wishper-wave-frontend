@@ -4,6 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import { userAuth } from '../../context/AccountProvider';
+import { Link } from 'react-router-dom';
 
 export default function Modal({isOpen,onClose}) {
     const {Logout}=userAuth()
@@ -20,7 +21,9 @@ export default function Modal({isOpen,onClose}) {
         </DialogTitle>
         <DialogActions>
           <Button onClick={onClose}>No</Button>
-          <Button onClick={Logout} autoFocus>Yes</Button>
+          <Link to={'/signin'}>
+             <Button onClick={Logout} autoFocus>Yes</Button>
+          </Link>
         </DialogActions>
       </Dialog>
     </React.Fragment>

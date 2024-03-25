@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { userAuth } from '../../context/AccountProvider';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -17,6 +17,7 @@ import { getAPI } from '../../services/api';
 import {toast} from 'react-hot-toast'
 import Conversations from './Conversations';
 import { userInfo } from '../../context/UserProvider';
+import Modal from '../reusable/Modal';
 
 
 
@@ -36,9 +37,18 @@ const Menus = () => {
     const { setPerson } = userInfo();
     const [searchText,setSearchText]=React.useState('')
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
    const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   const drawer = (
@@ -46,12 +56,18 @@ const Menus = () => {
       <Toolbar>
         <Box sx={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'space-around',alignItems:'space-between'}}>
             <Link onClick={()=>setPerson(null)} to={'/intro'}>
-              <Typography sx={{fontSize:'30px',color:'black'}}>
+              <Typography sx={{fontSize:'30px',color:'black',
+                    '&:hover': {
+                      color: 'gray',
+                    }}}>
                 <TiHome/>
               </Typography>
             </Link>
-            <Typography sx={{fontSize:'30px',color:'black'}}>
-              <BiSolidExit />
+            <Typography onClick={handleOpenModal} sx={{fontSize:'30px',color:'black',cursor:'pointer',
+                    '&:hover': {
+                      color: 'gray',
+                    }}}>
+                <BiSolidExit />
             </Typography>
         </Box>
       </Toolbar>
@@ -60,7 +76,8 @@ const Menus = () => {
       </Toolbar>
       <Divider />
       {/* conversation functionality */}
-      <Conversations users={users}/>          
+      <Conversations users={users}/> 
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} />         
     </div>
   );
 
