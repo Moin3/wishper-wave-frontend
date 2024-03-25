@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Acme&family=Philosopher&family=Poppins:wght@400;500;600&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&display=swap');
 
   ::-webkit-scrollbar {
     width: 2px; /* You can adjust the width as needed */
   }
   
   ::-webkit-scrollbar-thumb {
-    background-color: purple;
+    background-color: #f5f6f7;
     border-radius: 2px; 
   }
   

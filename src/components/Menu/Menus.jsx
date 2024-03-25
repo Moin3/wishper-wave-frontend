@@ -24,10 +24,13 @@ import Conversations from './Conversations';
 const drawerWidth = 240;
 
 const ChattingHeader=styled(AppBar)`
-    background: purple;
+    background: #577799;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
+    border-radius:10px;
+    
+   
 
 `
 

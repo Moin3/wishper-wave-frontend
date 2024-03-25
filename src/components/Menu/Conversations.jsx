@@ -48,10 +48,10 @@ const Conversations = ({ users }) => {
                   />
                 </ListItemIcon>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                  <Typography sx={{ textTransform: 'capitalize', fontWeight: 'bold' }}>
+                  <Typography sx={{ textTransform: 'capitalize', fontWeight: '700',fontFamily:"Quicksand" }}>
                     {`${userData?.first_name} ${userData?.last_name}`}
                   </Typography>
-                  <Typography sx={{ fontSize: 'small', letterSpacing: '.5px', fontWeight: 'semi-bold' }}>
+                  <Typography sx={{ fontSize: 'small', letterSpacing: '.5px', fontWeight: '500',fontFamily:"Quicksand" }}>
                     {msgText.slice(0, 17) + '...'}
                   </Typography>
                 </Box>

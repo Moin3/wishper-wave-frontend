@@ -79,8 +79,8 @@ function ProfileSettings() {
               <Box sx={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
                   {
                     person ? 
-                    ( <Typography sx={{textTransform:'capitalize',mr:2,color:'white'}}>{person?.first_name} {person?.last_name}</Typography>) 
-                    : (<Typography sx={{textTransform:'capitalize',mr:2,color:'white'}}>{user?.first_name} {user?.last_name}</Typography>)
+                    ( <Typography sx={{textTransform:'capitalize',mr:2,color:'white',fontFamily:'Quicksand',fontWeight:'800'}}>{person?.first_name} {person?.last_name}</Typography>) 
+                    : (<Typography sx={{textTransform:'capitalize',mr:2,color:'white',fontFamily:'Quicksand',fontWeight:'800'}}>{user?.first_name} {user?.last_name}</Typography>)
                   }
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <StyledBadge
