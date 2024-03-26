@@ -14,28 +14,34 @@ const Wrapper = styled(Box)`
     display: flex;
     border-radius: 10px;
     word-break: break-word;
+    
 `;
     
 const Own = styled(Box)`
-    background: #dcf8c6;
-    padding:5px 15px;
+    background: #c4e0f5;
+    padding:10px 10px;
     max-width: 60%;
     width: fit-content;
     margin-left: auto;
     display: flex;
-    border-radius: 10px;
+    border-radius: 5px;
     word-break: break-word;
 `;
 
 const Text = styled(Typography)`
     font-size: 14px;
     padding: 0 25px 0 5px;
+    font-family:Quicksand;
+    font-weight:500;
+    color:black
 `;
 
 const Time = styled(Typography)`
+    font-family:Quicksand;
+    font-weight:semi-bold;
     font-size: 10px;
     color: #373636;
-    margin-top: 6px;
+    // margin-top: 6px;
     word-break: keep-all;
     margin-top: auto;
 `;
@@ -88,15 +94,11 @@ const ImageMessage = ({ message }) => {
                         <Typography style={{ fontSize: 14 }} >{message.text.split("/").pop()}</Typography>
                     </div>
                 : 
-                    <img style={{ width: 300, height: '100%', objectFit: 'cover' }} src={message.text} alt={message.text} />
+                    <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} src={message.text} alt={message.text} />
             }
             
-            <Time style={{ position: 'absolute', bottom: 0, right: 0 }}>
-                <GetAppIcon 
-                    onClick={(e) => downloadMedia(e, message.text)} 
-                    fontSize='small' 
-                    style={{ marginRight: 10, border: '1px solid grey', borderRadius: '50%' }} 
-                />
+            <Time style={{ position: 'absolute', bottom: 3, right: 0 ,backgroundColor:'#577799',borderRadius: '2px',color:'white',padding:'2px'}}>
+                
                 {formatDate(message.createdAt)}
             </Time>
         </div>
