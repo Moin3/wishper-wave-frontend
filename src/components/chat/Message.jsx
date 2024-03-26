@@ -1,6 +1,6 @@
 import { Box, styled, Typography } from '@mui/material';
 import { userAuth } from '../../context/AccountProvider';
-import { formatDate } from '../../utils/common-utils';
+import { downloadMedia, formatDate } from '../../utils/common-utils';
 import { MdDownloadForOffline } from "react-icons/md";
 
 
@@ -87,16 +87,16 @@ const ImageMessage = ({ message }) => {
         <div style={{ position: 'relative' }}>
             {
                 message?.text?.includes('.pdf') ?
-                    <div style={{ display: 'flex' }}>
-                        <img src={'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1667px-PDF_file_icon.svg.png'} alt="pdf-icon" style={{ width: 80 }} />
-                        <Typography style={{ fontSize: 14 }} >{message.text.split("/").pop()}</Typography>
+                    <div style={{ display: 'flex',justifyContent:'center',alignItems:'center',gap:10}}>
+                        <img src={'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1667px-PDF_file_icon.svg.png'} alt="pdf-icon" style={{ width: 60 }} />
+                        <Typography style={{ fontSize: 14,width:'100%',maxWidth:'350px',fontFamily:'Quicksand',fontWeight:'500' }} >{message.text.split("/").pop()}</Typography>
                     </div>
                 : 
                     <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} src={message.text} alt={message.text} />
             }
             
             <Time style={{ position: 'absolute', bottom: 3, right: 0 ,backgroundColor:'#577799',borderRadius: '2px',color:'white',padding:'0 4px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',gap:'10px'}}>
-                <Typography sx={{mt:'3px',cursor:'pointer',fontSize:'14px'}}>
+                <Typography onClick={(e)=> downloadMedia(e,message.text)} sx={{mt:'3px',cursor:'pointer',fontSize:'14px'}}>
                     <MdDownloadForOffline />
                 </Typography>
                 {formatDate(message.createdAt)}
