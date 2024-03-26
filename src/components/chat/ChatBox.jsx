@@ -8,6 +8,7 @@ import { getAPI, postAPI } from '../../services/api';
 import { userInfo } from '../../context/UserProvider';
 import { userAuth } from '../../context/AccountProvider';
 import Message from './Message';
+import { userMsg } from '../../context/MsgProvider';
 
 
 
@@ -17,6 +18,7 @@ const drawerWidth = 240;
 const ChatBox = () => {
     const [conversationId,setConversationId]=useState()
     const [singleIsolatedMsg,setSingleIsolatedMsg]=useState([])
+    const {msgId}=userMsg()
     const {person}=userInfo()
     const {user}=userAuth()
 
@@ -52,7 +54,7 @@ const ChatBox = () => {
             }
         }
         getIsolatedConvertion()
-    },[conversationId,person?._id])
+    },[conversationId,person?._id,msgId])
 
   return (
     <Box

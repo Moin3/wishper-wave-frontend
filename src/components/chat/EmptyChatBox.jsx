@@ -48,34 +48,33 @@ export default function EmptyChatBox() {
                           Key Features:
                         </WelcomeText>
                         <List sx={{ width: '100%', maxWidth: 1000,  bgcolor: 'background.paper' }}>
-                        {
-                          keyFeature.map((listOpt,index)=>(
-                            <>
-                              <ListItem key={index} sx={{display:'flex',flexWrap:'wrap',flexDirectiion:{xs:'column',sm:'column',md:'row'},justifyContent:{xs:'start',md:'center'},alignItems:'center'}}>
-                                  <ListItemAvatar>
-                                    <Avatar sx={{ bgcolor: '#c4e0f5',color:'black' }}>{listOpt.icon}</Avatar>
-                                  </ListItemAvatar>
-                                  <ListItemText 
-                                    secondary={
-                                      <React.Fragment>
-                                        <Typography
-                                          sx={{ fontWeight: '600',fontFamily:"Quicksand",textAlign:{xs:'start',sm:'start'} }}
-                                          color="text.primary"
-                                        >
-                                          {listOpt.label}
-                                        </Typography>
-                                        <Typography sx={{fontWeight: '500',fontFamily:"Quicksand",textAlign:{xs:'start',sm:'start'}}} >
-                                           {listOpt.des}
-                                        </Typography>
-                                      </React.Fragment>
-                                    }
-                                  />
+                          {keyFeature.map((listOpt,index)=>(
+                            <div key={index}>
+                              <ListItem sx={{display:'flex',flexWrap:'wrap',flexDirectiion:{xs:'column',sm:'column',md:'row'},justifyContent:{xs:'start',md:'center'},alignItems:'center'}}>
+                                <ListItemAvatar>
+                                  <Avatar sx={{ bgcolor: '#c4e0f5',color:'black' }}>{listOpt.icon}</Avatar>
+                                </ListItemAvatar>
+                                <ListItemText 
+                                  secondary={
+                                    <React.Fragment>
+                                      <Typography
+                                        sx={{ fontWeight: '600',fontFamily:"Quicksand",textAlign:{xs:'start',sm:'start'} }}
+                                        color="text.primary"
+                                      >
+                                        {listOpt.label}
+                                      </Typography>
+                                      <Typography sx={{fontWeight: '500',fontFamily:"Quicksand",textAlign:{xs:'start',sm:'start'}}} >
+                                        {listOpt.des}
+                                      </Typography>
+                                    </React.Fragment>
+                                  }
+                                />
                               </ListItem>
-                              <Divider variant="inset" component="li" />
-                           </>
-                          ))
-                        }
-                        </List> 
+                              {index < keyFeature.length - 1 && <Divider variant="inset" component="li" />}
+                            </div>
+                          ))}
+                        </List>
+
                     </CardContent>
                </Card>
         </Box>

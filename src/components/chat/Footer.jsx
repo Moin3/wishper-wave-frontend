@@ -39,12 +39,14 @@ const InputField = styled(InputBase)`
 `;
 
 const ClipIcon = styled(AttachFile)`
-    transform: 'rotate(40deg)'
+    transform: rotate(40deg);
+    margin-top:5px;
+    cursor:pointer;
 `;
 
 
 const Footer = ({conversationId}) => {
-    const {msgText,setMsgText}=userMsg()
+    const {msgText,setMsgText,setMsgId}=userMsg()
     const {user}=userAuth()
     const {person}=userInfo()
      const [file,setFile]=useState(null)
@@ -52,7 +54,6 @@ const Footer = ({conversationId}) => {
 
 
     const handleMsgSend=async ()=>{
-        console.log(person)
         try{
             let message={}
             if(!file){
@@ -76,6 +77,7 @@ const Footer = ({conversationId}) => {
 
         const response=await postAPI('/message/add',message)
         const isolatedMsg=response.data
+        setMsgId(isolatedMsg.newMessage._id)
         toast.success(isolatedMsg.msg)
 
 

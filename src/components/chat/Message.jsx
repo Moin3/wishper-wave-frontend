@@ -6,7 +6,7 @@ import { MdDownloadForOffline } from "react-icons/md";
 
 const Wrapper = styled(Box)`
     background: #6dd7f4;
-    padding:10px 10px;
+    padding:1px 5px;
     max-width: 60%;
     width: fit-content;
     margin-right: auto;
@@ -17,7 +17,7 @@ const Wrapper = styled(Box)`
     
 const Own = styled(Box)`
     background: #c4e0f5;
-    padding:10px 10px;
+    padding:1px 5px;
     max-width: 60%;
     width: fit-content;
     margin-left: auto;
@@ -39,7 +39,6 @@ const Time = styled(Typography)`
     font-weight:semi-bold;
     font-size: 10px;
     color: #373636;
-    // margin-top: 6px;
     word-break: keep-all;
     margin-top: auto;
 `;
@@ -84,24 +83,22 @@ const TextMessage = ({ message }) => {
 const ImageMessage = ({ message }) => {
 
     return (
-        <div style={{ position: 'relative' }}>
+        <Box style={{ position: 'relative' }}>
             {
                 message?.text?.includes('.pdf') ?
-                    <div style={{ display: 'flex',justifyContent:'center',alignItems:'center',gap:10}}>
-                        <img src={'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1667px-PDF_file_icon.svg.png'} alt="pdf-icon" style={{ width: 60 }} />
-                        <Typography style={{ fontSize: 14,width:'100%',maxWidth:'350px',fontFamily:'Quicksand',fontWeight:'500' }} >{message.text.split("/").pop()}</Typography>
-                    </div>
+                    <Box style={{ display: 'flex',justifyContent:'center',alignItems:'center',gap:10}}>
+                        <img src={'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1667px-PDF_file_icon.svg.png'} alt="pdf-icon" style={{ width: 60,padding:6 }} />
+                        <Typography style={{ fontSize: 12,width:'100%',maxWidth:'350px',fontFamily:'Quicksand',fontWeight:'500' }} >{message.text.split("/").pop()}</Typography>
+                    </Box>
                 : 
                     <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} src={message.text} alt={message.text} />
             }
             
             <Time style={{ position: 'absolute', bottom: 3, right: 0 ,backgroundColor:'#577799',borderRadius: '2px',color:'white',padding:'0 4px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',gap:'10px'}}>
-                <Typography onClick={(e)=> downloadMedia(e,message.text)} sx={{mt:'3px',cursor:'pointer',fontSize:'14px'}}>
-                    <MdDownloadForOffline />
-                </Typography>
+                <MdDownloadForOffline style={{cursor:'pointer'}} onClick={(e)=> downloadMedia(e,message.text)} />
                 {formatDate(message.createdAt)}
             </Time>
-        </div>
+        </Box>
     )
 }
 
