@@ -1,20 +1,18 @@
 import { Box, styled, Typography } from '@mui/material';
-import { GetApp as GetAppIcon } from '@mui/icons-material';
-
 import { userAuth } from '../../context/AccountProvider';
 import { formatDate } from '../../utils/common-utils';
-
+import { MdDownloadForOffline } from "react-icons/md";
 
 
 const Wrapper = styled(Box)`
     background: #6dd7f4;
-    padding:5px 15px;
+    padding:10px 10px;
     max-width: 60%;
     width: fit-content;
+    margin-right: auto;
     display: flex;
-    border-radius: 10px;
+    border-radius: 5px;
     word-break: break-word;
-    
 `;
     
 const Own = styled(Box)`
@@ -97,8 +95,10 @@ const ImageMessage = ({ message }) => {
                     <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} src={message.text} alt={message.text} />
             }
             
-            <Time style={{ position: 'absolute', bottom: 3, right: 0 ,backgroundColor:'#577799',borderRadius: '2px',color:'white',padding:'2px'}}>
-                
+            <Time style={{ position: 'absolute', bottom: 3, right: 0 ,backgroundColor:'#577799',borderRadius: '2px',color:'white',padding:'0 4px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',gap:'10px'}}>
+                <Typography sx={{mt:'3px',cursor:'pointer',fontSize:'14px'}}>
+                    <MdDownloadForOffline />
+                </Typography>
                 {formatDate(message.createdAt)}
             </Time>
         </div>

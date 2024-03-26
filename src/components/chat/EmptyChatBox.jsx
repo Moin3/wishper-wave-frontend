@@ -51,7 +51,7 @@ export default function EmptyChatBox() {
                         {
                           keyFeature.map((listOpt,index)=>(
                             <>
-                              <ListItem key={index} sx={{display:'flex',flexWrap:"wrap",justifyContent:'center',alignItems:'center',}}>
+                              <ListItem key={index} sx={{display:'flex',flexWrap:'wrap',flexDirectiion:{xs:'column',sm:'column',md:'row'},justifyContent:{xs:'start',md:'center'},alignItems:'center'}}>
                                   <ListItemAvatar>
                                     <Avatar sx={{ bgcolor: '#c4e0f5',color:'black' }}>{listOpt.icon}</Avatar>
                                   </ListItemAvatar>
@@ -59,12 +59,12 @@ export default function EmptyChatBox() {
                                     secondary={
                                       <React.Fragment>
                                         <Typography
-                                          sx={{ fontWeight: '600',fontFamily:"Quicksand",textAlign:{xs:'center',sm:'start'} }}
+                                          sx={{ fontWeight: '600',fontFamily:"Quicksand",textAlign:{xs:'start',sm:'start'} }}
                                           color="text.primary"
                                         >
                                           {listOpt.label}
                                         </Typography>
-                                        <Typography sx={{fontWeight: '500',fontFamily:"Quicksand",textAlign:{xs:'center',sm:'start'}}} >
+                                        <Typography sx={{fontWeight: '500',fontFamily:"Quicksand",textAlign:{xs:'start',sm:'start'}}} >
                                            {listOpt.des}
                                         </Typography>
                                       </React.Fragment>
