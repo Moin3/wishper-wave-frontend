@@ -2,6 +2,7 @@ import { Box, styled, Typography } from '@mui/material';
 import { userAuth } from '../../context/AccountProvider';
 import { downloadMedia, formatDate } from '../../utils/common-utils';
 import { MdDownloadForOffline } from "react-icons/md";
+import React, { forwardRef } from 'react';
 
 
 const Wrapper = styled(Box)`
@@ -43,12 +44,12 @@ const Time = styled(Typography)`
     margin-top: auto;
 `;
 
-const Message = ({ message }) => {
+const Message = forwardRef(({ message }, ref) => {
     const {user}=userAuth()
 
 
     return (
-        <>
+        <div ref={ref}>
         {
             user?._id === message.senderId ? 
                 <Own>
@@ -64,9 +65,9 @@ const Message = ({ message }) => {
                 </Wrapper>
         }
         
-        </>
-    )
-}
+        </div>
+    );
+});
 
 const TextMessage = ({ message }) => {
     

@@ -52,7 +52,7 @@ const Menus = () => {
   };
 
   const drawer = (
-    <div>
+    <Box>
       <Toolbar>
         <Box sx={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'space-around',alignItems:'space-between'}}>
             <Link onClick={()=>setPerson(null)} to={'/intro'}>
@@ -82,7 +82,7 @@ const Menus = () => {
       {/* conversation functionality */}
       <Conversations users={users}/> 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} />         
-    </div>
+    </Box>
   );
 
 

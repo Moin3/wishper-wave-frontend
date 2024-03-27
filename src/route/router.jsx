@@ -3,7 +3,6 @@ import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import App from "../App";
 import NotFound from "../pages/NotFound";
-import Profile from "../pages/Profile";
 import IntroPage from "../pages/IntroPage";
 
 
@@ -20,10 +19,6 @@ const router = createBrowserRouter([
               {
                 path: "/signin",
                 element: <SignIn />,
-            },
-            {
-              path: "/profile",
-              element: <Profile/>,
             },
             {
               path: "/intro",
