@@ -22,7 +22,7 @@ export default function Modal({isOpen,onClose}) {
         <DialogActions>
           <Button onClick={onClose}>No</Button>
           <Link to={'/signin'}>
-             <Button onClick={Logout} autoFocus>Yes</Button>
+             <Button onClick={()=>Logout()} autoFocus>Yes</Button>
           </Link>
         </DialogActions>
       </Dialog>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -11,16 +11,28 @@ import { userAuth } from '../../context/AccountProvider';
 import { Box, Typography } from '@mui/material';
 
 const Conversations = ({ users }) => {
-  const { setPerson } = userInfo();
-  const { user } = userAuth();
+  const { setPerson ,person} = userInfo();
+  const { user,socket,setActiveUsers } = userAuth();
   const [selectedUser, setSelectedUser] = useState(null);
+  const [userDataArray,setUserDataArray]=useState([])
   const msgText = "The name of my country is Bangladesh";
 
   const getUser = async (userData) => {
     const response = await postAPI('/conversation/add', { senderId: user?._id, receiverId: userData?._id });
     setPerson(userData);
+    setUserDataArray(userData)
     setSelectedUser(userData); 
   };
+
+
+  useEffect(()=>{
+    socket.current.emit("addUser",user)
+    socket.current.on("getUsers", (usersData) => {
+      console.log(usersData)
+      setActiveUsers(usersData);
+  })
+
+},[userDataArray.length])
 
   return (
     <List>

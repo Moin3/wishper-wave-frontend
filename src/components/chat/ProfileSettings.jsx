@@ -8,12 +8,12 @@ import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import { userInfo } from '../../context/UserProvider';
+import { useState, useEffect } from 'react';
 
-
-const StyledBadge = styled(Badge)(({ theme }) => ({
+const StyledBadge = styled(Badge)(({ theme, isActive }) => ({
   '& .MuiBadge-badge': {
-    backgroundColor: '#44b700',
-    color: '#44b700',
+    backgroundColor: isActive ? '#44b700' : 'gray',
+    color: isActive ? '#44b700' : 'white',
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
     '&::after': {
       position: 'absolute',
@@ -39,39 +39,46 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-
-
 function ProfileSettings() {
-  const {user}=userAuth()
-  const {person}=userInfo()
+  const { user, activeUsers } = userAuth();
+  const { person } = userInfo();
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const isActiveUser = activeUsers?.find(actUser => actUser?._id === (person?._id || user?._id));
+    setActive(!!isActiveUser);
+  }, [activeUsers, person, user]);
 
   return (
     <div>
-        <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 0 }}>
-              <Box sx={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                  {
-                    person ? 
-                    ( <Typography sx={{textTransform:'capitalize',mr:2,color:'white',fontFamily:'Quicksand',fontWeight:'800'}}>{person?.first_name} {person?.last_name}</Typography>) 
-                    : (<Typography sx={{textTransform:'capitalize',mr:2,color:'white',fontFamily:'Quicksand',fontWeight:'800'}}>{user?.first_name} {user?.last_name}</Typography>)
-                  }
-                <IconButton sx={{ p: 0 }}>
-                    <StyledBadge
-                      overlap="circular"
-                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                      variant="dot"
-                    >
-                      {
-                        person ? 
-                        ( <Avatar alt="Remy Sharp" sx={{bgcolor:'white'}} src={`${person?.avatar}`} />) 
-                        : (<Avatar alt="Remy Sharp" sx={{bgcolor:'white'}} src={`${user?.avatar}`} />)
-                      }
-                    </StyledBadge>
-                </IconButton>
-              </Box>
+      <Toolbar disableGutters>
+        <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            {person ? (
+              <Typography sx={{ textTransform: 'capitalize', mr: 2, color: 'white', fontFamily: 'Quicksand', fontWeight: '800' }}>
+                {person?.first_name} {person?.last_name}
+              </Typography>
+            ) : (
+              <Typography sx={{ textTransform: 'capitalize', mr: 2, color: 'white', fontFamily: 'Quicksand', fontWeight: '800' }}>
+                {user?.first_name} {user?.last_name}
+              </Typography>
+            )}
+            <IconButton sx={{ p: 0 }}>
+              <StyledBadge
+                isActive={active}
+                overlap="circular"
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                variant="dot"
+              >
+                <Avatar alt="Avatar" sx={{ bgcolor: 'white' }} src={person ? person.avatar : user.avatar} />
+              </StyledBadge>
+            </IconButton>
+            <Box>{active ? 'online' : 'offline'}</Box>
           </Box>
-        </Toolbar>
-      </div>
+        </Box>
+      </Toolbar>
+    </div>
   );
 }
+
 export default ProfileSettings;

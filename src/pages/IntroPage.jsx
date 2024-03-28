@@ -7,7 +7,7 @@ import { userAuth } from '../context/AccountProvider';
 import { useNavigate } from 'react-router-dom';
 
 
-function ChattingPage(props) {
+function IntroPage(props) {
     const navigate=useNavigate()
     const {user,token}=userAuth()
 
@@ -27,4 +27,4 @@ function ChattingPage(props) {
 }
 
 
-export default ChattingPage;
+export default IntroPage;
