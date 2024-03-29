@@ -73,7 +73,7 @@ function ProfileSettings() {
                 <Avatar alt="Avatar" sx={{ bgcolor: 'white' }} src={person ? person.avatar : user.avatar} />
               </StyledBadge>
             </IconButton>
-            <Box>{active ? 'online' : 'offline'}</Box>
+            {/* <Box>{active ? 'online' : 'offline'}</Box> */}
           </Box>
         </Box>
       </Toolbar>
