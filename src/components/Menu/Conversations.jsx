@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -11,7 +11,7 @@ import { userAuth } from '../../context/AccountProvider';
 import { Box, Typography } from '@mui/material';
 
 const Conversations = ({ users }) => {
-  const { setPerson ,person} = userInfo();
+  const { setPerson } = userInfo();
   const { user,socket,setActiveUsers } = userAuth();
   const [selectedUser, setSelectedUser] = useState(null);
   const [userDataArray,setUserDataArray]=useState([])
@@ -20,19 +20,20 @@ const Conversations = ({ users }) => {
   const getUser = async (userData) => {
     const response = await postAPI('/conversation/add', { senderId: user?._id, receiverId: userData?._id });
     setPerson(userData);
-    setUserDataArray(userData)
     setSelectedUser(userData); 
+
   };
 
 
   useEffect(()=>{
     socket.current.emit("addUser",user)
-    socket.current.on("getUsers", (usersData) => {
-      console.log(usersData)
-      setActiveUsers(usersData);
+    socket.current.on("getUsers", (usersDatas) => {
+      setActiveUsers(usersDatas);
+      setUserDataArray(usersDatas)
+
   })
 
-},[userDataArray.length])
+},[user])
 
   return (
     <List>
@@ -59,6 +60,7 @@ const Conversations = ({ users }) => {
                     sx={{ width: 24, height: 24 }}
                   />
                 </ListItemIcon>
+                {console.log("userData",userData._id)}
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography sx={{ textTransform: 'capitalize', fontWeight: '700',fontFamily:"Quicksand" }}>
                     {`${userData?.first_name} ${userData?.last_name}`}
@@ -66,6 +68,11 @@ const Conversations = ({ users }) => {
                   <Typography sx={{ fontSize: 'small', letterSpacing: '.5px', fontWeight: '500',fontFamily:"Quicksand" }}>
                     {msgText.slice(0, 17) + '...'}
                   </Typography>
+                  {userDataArray.find(userItem => userItem._id === userData._id) ? (
+                    <Typography sx={{ fontSize: 'x-small', color: 'green', fontFamily: "Quicksand" }}>Online</Typography>
+                  ) : (
+                    <Typography sx={{ fontSize: 'x-small', color: 'red', fontFamily: "Quicksand" }}>Offline</Typography>
+                  )}
                 </Box>
               </ListItemButton>
             </ListItem>
