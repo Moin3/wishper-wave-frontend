@@ -59,18 +59,6 @@ const ChatBox = () => {
     }, [ singleIsolatedMsg]);
 
 
-
-    // useEffect(() => {
-    //     socket.current.on('getMessage', data => {
-    //         setIncomingMessage({
-    //             ...data,
-    //             createdAt: Date.now()
-    //         })
-    //     console.log(data)
-
-    //     })
-    //   }, []);
-
     return (
         <Box
       component="main"

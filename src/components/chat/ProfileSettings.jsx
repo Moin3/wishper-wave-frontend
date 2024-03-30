@@ -40,15 +40,10 @@ const StyledBadge = styled(Badge)(({ theme, isActive }) => ({
 }));
 
 function ProfileSettings() {
-  // const { user, activeUsers } = userAuth();
   const { user } = userAuth();
   const { person } = userInfo();
   const [active, setActive] = useState(false);
 
-  // useEffect(() => {
-  //   const isActiveUser = activeUsers?.find(actUser => actUser?._id === (person?._id || user?._id));
-  //   setActive(!!isActiveUser);
-  // }, [activeUsers, person, user]);
 
   return (
     <div>
@@ -74,7 +69,6 @@ function ProfileSettings() {
                 <Avatar alt="Avatar" sx={{ bgcolor: 'white' }} src={person ? person.avatar : user?.avatar} />
               </StyledBadge>
             </IconButton>
-            {/* <Box>{active ? 'online' : 'offline'}</Box> */}
           </Box>
         </Box>
       </Toolbar>
