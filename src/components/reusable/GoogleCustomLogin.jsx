@@ -21,7 +21,7 @@ const GoogleCustomLogin = () => {
   
         if(response.success){
           toast.success(response.msg)
-          navigate('/')
+          navigate('/intro')
           localStorage.setItem('token',JSON.stringify(response.token))
           localStorage.setItem('user',JSON.stringify(response.user))
           setToken(response.token)

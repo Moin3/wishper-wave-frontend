@@ -1,8 +1,6 @@
 import { createContext, useContext, useState, useEffect,useRef } from "react";
 import toast from 'react-hot-toast'
 export const AccountContext=createContext(null);
-import {io} from 'socket.io-client'
-
 
 
 const AccountProvider = ({children}) => {
@@ -28,14 +26,6 @@ const AccountProvider = ({children}) => {
       toast.success("Successfully Logout")
     }
 
-    
-
-    useEffect(()=>{
-        socket.current=io("ws://localhost:9000")
-        return () => {
-          socket.current.disconnect();
-      };
-    },[user])
 
     if(loading){
       return null
@@ -50,9 +40,6 @@ const AccountProvider = ({children}) => {
         loading,
         setLoading,
         Logout,
-        socket,
-        activeUsers,
-        setActiveUsers
     }}>
         {children}
     </AccountContext.Provider>

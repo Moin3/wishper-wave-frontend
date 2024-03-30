@@ -43,36 +43,14 @@ const Time = styled(Typography)`
     margin-top: auto;
 `;
 
-const Message = forwardRef(({ message }, ref) => {
-    const { user } = userAuth();
-
+const VideoMessage = ({ message }) => {
     return (
-        <div ref={ref}>
-        {
-            user ?._id === message.senderId ? 
-                <Own>
-                    {
-                        message.type === 'file' ? <ImageMessage message={message} /> : <TextMessage message={message} />
-                    }
-                </Own>
-                 : 
-                <Wrapper>
-                    {
-                        message.type === 'file' ? <ImageMessage message={message} /> : <TextMessage message={message} />
-                    }
-                </Wrapper>
-        }
-        
-        </div>
-    );
-});
-
-const TextMessage = ({ message }) => {
-    return (
-        <>
-            <Text>{message.text}</Text>
-            <Time>{formatDate(message.createdAt)}</Time>
-        </>
+        <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
+            <video controls style={{ maxWidth: '300px', maxHeight: '250px' }}>
+                <source src={message.text} type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+        </Box>
     );
 };
 
@@ -122,7 +100,9 @@ const ImageMessage = ({ message }) => {
 
     const renderFileMessage = () => {
         const fileType = getFileType(message.text);
-        if (fileType !== 'unknown') {
+        if (fileType === 'mp4' || fileType === 'mkv' || fileType === 'wmv' || fileType === 'webm') {
+            return <VideoMessage message={message} />;
+        } else if (fileType !== 'unknown') {
             return (
                 <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
                     <img src={getFileIcon(fileType)} alt={`${fileType}-icon`} style={{ width: 60, padding: 6 }} />
@@ -130,8 +110,9 @@ const ImageMessage = ({ message }) => {
                 </Box>
             );
         } else {
-            // Handle unknown file types
-            return <Text>{message.text}</Text>;
+            return (
+                <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} src={message.text} alt={message.text}/>
+            );
         }
     };
 
@@ -143,6 +124,39 @@ const ImageMessage = ({ message }) => {
                 {formatDate(message.createdAt)}
             </Time>
         </Box>
+    );
+};
+
+const Message = forwardRef(({ message }, ref) => {
+    const { user } = userAuth();
+
+    return (
+        <div ref={ref}>
+        {
+            user ?._id === message.senderId ? 
+                <Own>
+                    {
+                        message.type === 'file' ? <ImageMessage message={message} /> : <TextMessage message={message} />
+                    }
+                </Own>
+                 : 
+                <Wrapper>
+                    {
+                        message.type === 'file' ? <ImageMessage message={message} /> : <TextMessage message={message} />
+                    }
+                </Wrapper>
+        }
+        
+        </div>
+    );
+});
+
+const TextMessage = ({ message }) => {
+    return (
+        <>
+            <Text>{message.text}</Text>
+            <Time>{formatDate(message.createdAt)}</Time>
+        </>
     );
 };
 

@@ -47,7 +47,7 @@ const ClipIcon = styled(AttachFile)`
 
 const Footer = ({conversationId}) => {
     const {msgText,setMsgText,setMsgId}=userMsg()
-    const {user}=userAuth()
+    const {user,socket}=userAuth()
     const {person}=userInfo()
      const [file,setFile]=useState(null)
     const [image,setImage]=useState('')
@@ -74,6 +74,8 @@ const Footer = ({conversationId}) => {
                 text:image
             }
         }
+
+        // socket.current.emit('sendMessage', message);
 
         const response=await postAPI('/message/add',message)
         const isolatedMsg=response.data

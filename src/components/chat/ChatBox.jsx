@@ -15,9 +15,10 @@ const drawerWidth = 240;
 const ChatBox = () => {
     const [conversationId, setConversationId] = useState();
     const [singleIsolatedMsg, setSingleIsolatedMsg] = useState([]);
+    const [incomingMessage, setIncomingMessage] = useState(null);
     const { msgId } = userMsg();
     const { person } = userInfo();
-    const { user } = userAuth();
+    const { user ,socket} = userAuth();
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
@@ -57,13 +58,26 @@ const ChatBox = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [ singleIsolatedMsg]);
 
+
+
+    // useEffect(() => {
+    //     socket.current.on('getMessage', data => {
+    //         setIncomingMessage({
+    //             ...data,
+    //             createdAt: Date.now()
+    //         })
+    //     console.log(data)
+
+    //     })
+    //   }, []);
+
     return (
         <Box
-            component="main"
-            sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-        >
-            <Toolbar />
-            <Box style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 200px)' }}>
+      component="main"
+      sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+    >
+      <Toolbar />
+      <Box sx={{ display: 'flex',flexDirection:'column',  height: '100%' }}>
                 {singleIsolatedMsg?.map((msg) => (
                     <Box ref={messagesEndRef}  key={msg._id} sx={{ px: 2, py: 1 }}>
                         <Message message={msg} />

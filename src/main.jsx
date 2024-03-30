@@ -8,6 +8,7 @@ import AccountProvider from './context/AccountProvider'
 import { Toaster } from 'react-hot-toast';
 import UserProvider from './context/UserProvider'
 import MsgProvider from './context/MsgProvider'
+import SocketProvider from './context/SocketProvider'
 
 
 
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <MsgProvider>
         <AccountProvider>
           <UserProvider>
-            <RouterProvider router={router} />
+            <SocketProvider>
+              <RouterProvider router={router} />
+            </SocketProvider>
           </UserProvider>
         </AccountProvider>
       </MsgProvider>
