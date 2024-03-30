@@ -9,6 +9,7 @@ import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import { userInfo } from '../../context/UserProvider';
 import { useState, useEffect } from 'react';
+import { useSocket } from '../../context/SocketProvider';
 
 const StyledBadge = styled(Badge)(({ theme, isActive }) => ({
   '& .MuiBadge-badge': {
@@ -42,8 +43,17 @@ const StyledBadge = styled(Badge)(({ theme, isActive }) => ({
 function ProfileSettings() {
   const { user } = userAuth();
   const { person } = userInfo();
+  const { onlineUsers } = useSocket();
   const [active, setActive] = useState(false);
 
+  useEffect(() => {
+    // Check if person._id exists in onlineUsers array
+    if (person && person._id && onlineUsers.includes(person._id)) {
+      setActive(true);
+    } else {
+      setActive(false);
+    }
+  }, [onlineUsers, person]);
 
   return (
     <div>
@@ -60,14 +70,20 @@ function ProfileSettings() {
               </Typography>
             )}
             <IconButton sx={{ p: 0 }}>
-              <StyledBadge
-                isActive={active}
-                overlap="circular"
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                variant="dot"
-              >
-                <Avatar alt="Avatar" sx={{ bgcolor: 'white' }} src={person ? person.avatar : user?.avatar} />
-              </StyledBadge>
+              {
+                person ? (
+                  <StyledBadge
+                    isActive={active}
+                    overlap="circular"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    variant="dot"
+                  >
+                    <Avatar alt="Avatar" sx={{ bgcolor: 'white' }} src={person.avatar }/>
+                  </StyledBadge>
+                ) : (
+                  <Avatar alt="Avatar" sx={{ bgcolor: 'white' }} src={ user?.avatar} />
+                )
+              }
             </IconButton>
           </Box>
         </Box>
