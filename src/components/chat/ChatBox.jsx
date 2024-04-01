@@ -10,7 +10,7 @@ import { userAuth } from '../../context/AccountProvider';
 import Message from './Message';
 import { userMsg } from '../../context/MsgProvider';
 import { useSocket } from '../../context/SocketProvider';
-// import useListenMessage from '../../hooks/useListenMessage';
+
 
 const drawerWidth = 240;
 
@@ -20,18 +20,10 @@ const ChatBox = () => {
     const { msgId,messages } = userMsg();
     const { person } = userInfo();
     const { user } = userAuth();
-    const {socket}=useSocket();
     const messagesEndRef = useRef(null);
     const [conversation, setConversation] = useState({});
-    // useListenMessage()
 
 
-
-    // useEffect(()=>{
-    //     socket?.on('newMessage',newMessage =>{
-            console.log(messages)
-    //     })
-    // },[])
 
     useEffect(() => {
         messages && conversation?.members?.includes(messages.senderId) && 
@@ -39,7 +31,7 @@ const ChatBox = () => {
         
     }, [messages, conversation]);
 
-    // const receiverId = conversation?.members?.find(member => member !== user._id);
+    
 
     useEffect(() => {
         const getConversationDetails = async () => {
@@ -59,6 +51,8 @@ const ChatBox = () => {
         };
         getConversationDetails();
     }, [person?._id]);
+
+
 
     useEffect(() => {
         const getIsolatedConversation = async () => {
