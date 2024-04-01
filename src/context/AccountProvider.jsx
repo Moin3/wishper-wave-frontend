@@ -3,11 +3,11 @@ import toast from 'react-hot-toast'
 export const AccountContext=createContext(null);
 
 
+
 const AccountProvider = ({children}) => {
     const [token,setToken]=useState(null)
     const [user,setUser]=useState(JSON.parse(localStorage.getItem('user')) || null)
     const [loading,setLoading]=useState(true)
-    const socket=useRef()
 
 
     useEffect(()=>{
@@ -37,7 +37,7 @@ const AccountProvider = ({children}) => {
         setUser,
         loading,
         setLoading,
-        Logout,
+        Logout
     }}>
         {children}
     </AccountContext.Provider>

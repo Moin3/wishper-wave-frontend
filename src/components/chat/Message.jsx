@@ -48,7 +48,6 @@ const VideoMessage = ({ message }) => {
         <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
             <video controls style={{ maxWidth: '300px', maxHeight: '250px' }}>
                 <source src={message.text} type="video/mp4" />
-                Your browser does not support the video tag.
             </video>
         </Box>
     );
@@ -106,7 +105,7 @@ const ImageMessage = ({ message }) => {
             return (
                 <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
                     <img src={getFileIcon(fileType)} alt={`${fileType}-icon`} style={{ width: 60, padding: 6 }} />
-                    <Typography style={{ fontSize: 12, width: '100%', maxWidth: '350px', fontFamily: 'Quicksand', fontWeight: '500' }}>{message.text.split("/").pop()}</Typography>
+                    <Typography style={{ fontSize: 12, width: '80%', maxWidth: '300px', fontFamily: 'Quicksand', fontWeight: '500' }}>{message.text.split("/").pop()}</Typography>
                 </Box>
             );
         } else {

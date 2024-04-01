@@ -22,6 +22,7 @@ import Modal from '../reusable/Modal';
 
 
 
+
 const drawerWidth = 240;
 
 const ChattingHeader=styled(AppBar)`
@@ -39,6 +40,7 @@ const Menus = () => {
     const [searchText,setSearchText]=React.useState('')
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
 
    const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -105,6 +107,7 @@ const Menus = () => {
   }
   fetchData();
   }, [searchText]);
+
     
   return (  
     <Box>

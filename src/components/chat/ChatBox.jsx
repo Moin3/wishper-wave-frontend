@@ -9,17 +9,37 @@ import { userInfo } from '../../context/UserProvider';
 import { userAuth } from '../../context/AccountProvider';
 import Message from './Message';
 import { userMsg } from '../../context/MsgProvider';
+import { useSocket } from '../../context/SocketProvider';
+// import useListenMessage from '../../hooks/useListenMessage';
 
 const drawerWidth = 240;
 
 const ChatBox = () => {
     const [conversationId, setConversationId] = useState();
     const [singleIsolatedMsg, setSingleIsolatedMsg] = useState([]);
-    const [incomingMessage, setIncomingMessage] = useState(null);
-    const { msgId } = userMsg();
+    const { msgId,messages } = userMsg();
     const { person } = userInfo();
-    const { user ,socket} = userAuth();
+    const { user } = userAuth();
+    const {socket}=useSocket();
     const messagesEndRef = useRef(null);
+    const [conversation, setConversation] = useState({});
+    // useListenMessage()
+
+
+
+    // useEffect(()=>{
+    //     socket?.on('newMessage',newMessage =>{
+            console.log(messages)
+    //     })
+    // },[])
+
+    useEffect(() => {
+        messages && conversation?.members?.includes(messages.senderId) && 
+        setSingleIsolatedMsg((prev) => [...prev, messages]);
+        
+    }, [messages, conversation]);
+
+    // const receiverId = conversation?.members?.find(member => member !== user._id);
 
     useEffect(() => {
         const getConversationDetails = async () => {
@@ -28,6 +48,7 @@ const ChatBox = () => {
                 let conversationData = response.data;
                 if (conversationData) {
                     setConversationId(conversationData._id);
+                    setConversation(conversationData)
                 } else {
                     toast.success('First time you open this conversation');
                 }

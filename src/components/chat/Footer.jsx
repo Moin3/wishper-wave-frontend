@@ -8,6 +8,9 @@ import { userInfo } from '../../context/UserProvider';
 import { postAPI } from '../../services/api';
 import {toast} from 'react-hot-toast'
 import { useEffect, useState } from 'react';
+// import useListenMessage from '../../hooks/useListenMessage';
+import { useSocket } from '../../context/SocketProvider';
+
 
 
 const Container = styled(Box)`
@@ -46,11 +49,24 @@ const ClipIcon = styled(AttachFile)`
 
 
 const Footer = ({conversationId}) => {
-    const {msgText,setMsgText,setMsgId}=userMsg()
-    const {user,socket}=userAuth()
+    const {msgText,setMsgText,setMsgId,setMessages}=userMsg()
+    const {user}=userAuth()
     const {person}=userInfo()
+    const {socket }=useSocket()
      const [file,setFile]=useState(null)
     const [image,setImage]=useState('')
+    
+    // useListenMessage() 
+
+    useEffect(()=>{
+        socket.on("getMessage",data=>{
+            setMessages({
+                ...data,
+                createdAt:Date.now()
+            })
+        })
+    })
+
 
 
     const handleMsgSend=async ()=>{
@@ -75,14 +91,15 @@ const Footer = ({conversationId}) => {
             }
         }
 
-        // socket.current.emit('sendMessage', message);
-
+        // ///////////////////////////////////////////////////
+        socket.emit('sendMessage', message);
+// ////////////////////////////////////////////////
         const response=await postAPI('/message/add',message)
         const isolatedMsg=response.data
+        // console.log(isolatedMsg.newMessage)
+        // setMessages(isolatedMsg.newMessage)
         setMsgId(isolatedMsg.newMessage._id)
         toast.success(isolatedMsg.msg)
-
-
         }catch(err){
             toast.error(err.message)
         }
@@ -91,6 +108,10 @@ const Footer = ({conversationId}) => {
         setImage('')
         setFile(null)
     }
+
+
+
+
 
 
 
@@ -116,6 +137,19 @@ const Footer = ({conversationId}) => {
         }
         getImage()
     }, [file])
+
+
+    // useEffect(() => {
+	// 	socket?.on("newMessage", (newMessage) => {
+	// 		// newMessage.shouldShake = true;
+	// 		// const sound = new Audio(notificationSound);
+	// 		// sound.play();
+    //         console.log(newMessage)
+	// 		setMessages([...messages, newMessage]);
+	// 	});
+
+	// 	return () => socket?.off("newMessage");
+	// }, [socket, setMessages, messages]);
 
 
 

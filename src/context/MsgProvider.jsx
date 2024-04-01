@@ -6,13 +6,16 @@ const MsgProvider = ({children}) => {
 
     const [msgText,setMsgText]=useState('')
     const [msgId,setMsgId]=useState('')
+    const [messages,setMessages]=useState(null)
     
     return (
         <MsgContext.Provider value={{
             msgText,
             setMsgText,
             msgId,
-            setMsgId
+            setMsgId,
+            messages,
+            setMessages
          }}>
             {children}
         </MsgContext.Provider>
