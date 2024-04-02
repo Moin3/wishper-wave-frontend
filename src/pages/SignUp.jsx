@@ -41,6 +41,7 @@ export default function SignUp() {
   const handleSubmit =async (event) => {
     event.preventDefault();
     // setUserSignUp(initialState)
+    
    try{
     if(first_name && last_name && email && password){
       const signUpUser=await postAPI('/signup',userSignUp)

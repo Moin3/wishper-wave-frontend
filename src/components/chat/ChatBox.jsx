@@ -9,7 +9,6 @@ import { userInfo } from '../../context/UserProvider';
 import { userAuth } from '../../context/AccountProvider';
 import Message from './Message';
 import { userMsg } from '../../context/MsgProvider';
-import { useSocket } from '../../context/SocketProvider';
 
 
 const drawerWidth = 240;
@@ -17,7 +16,7 @@ const drawerWidth = 240;
 const ChatBox = () => {
     const [conversationId, setConversationId] = useState();
     const [singleIsolatedMsg, setSingleIsolatedMsg] = useState([]);
-    const { msgId,messages ,setLastMsg} = userMsg();
+    const { msgId,messages } = userMsg();
     const { person } = userInfo();
     const { user } = userAuth();
     const messagesEndRef = useRef(null);
@@ -28,11 +27,9 @@ const ChatBox = () => {
     useEffect(() => {
         messages && conversation?.members?.includes(messages.senderId) && 
         setSingleIsolatedMsg((prev) => [...prev, messages]);
-        setLastMsg([messages])
         
     }, [messages, conversation]);
 
-    
 
     useEffect(() => {
         const getConversationDetails = async () => {
