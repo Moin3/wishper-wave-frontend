@@ -8,7 +8,6 @@ import { userInfo } from '../../context/UserProvider';
 import { postAPI } from '../../services/api';
 import {toast} from 'react-hot-toast'
 import { useEffect, useState } from 'react';
-// import useListenMessage from '../../hooks/useListenMessage';
 import { useSocket } from '../../context/SocketProvider';
 
 
@@ -56,7 +55,6 @@ const Footer = ({conversationId}) => {
      const [file,setFile]=useState(null)
     const [image,setImage]=useState('')
     
-    // useListenMessage() 
 
     useEffect(()=>{
         socket.on("getMessage",data=>{
@@ -91,13 +89,12 @@ const Footer = ({conversationId}) => {
             }
         }
 
-        // ///////////////////////////////////////////////////
+        // socket msg send to backend
         socket.emit('sendMessage', message);
-// ////////////////////////////////////////////////
+
+
         const response=await postAPI('/message/add',message)
         const isolatedMsg=response.data
-        // console.log(isolatedMsg.newMessage)
-        // setMessages(isolatedMsg.newMessage)
         setMsgId(isolatedMsg.newMessage._id)
         toast.success(isolatedMsg.msg)
         }catch(err){
@@ -112,16 +109,13 @@ const Footer = ({conversationId}) => {
 
 
 
-
-
-
     const onFileChange = (e) => {
         setFile(e.target.files[0]);
         setMsgText(e.target.files[0].name);
     }
 
 
-        useEffect(() => {
+    useEffect(() => {
         const getImage = async () => {
                 if (file) {
                     const datas = new FormData();
@@ -137,19 +131,6 @@ const Footer = ({conversationId}) => {
         }
         getImage()
     }, [file])
-
-
-    // useEffect(() => {
-	// 	socket?.on("newMessage", (newMessage) => {
-	// 		// newMessage.shouldShake = true;
-	// 		// const sound = new Audio(notificationSound);
-	// 		// sound.play();
-    //         console.log(newMessage)
-	// 		setMessages([...messages, newMessage]);
-	// 	});
-
-	// 	return () => socket?.off("newMessage");
-	// }, [socket, setMessages, messages]);
 
 
 

@@ -46,8 +46,8 @@ const Time = styled(Typography)`
 const VideoMessage = ({ message }) => {
     return (
         <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
-            <video controls style={{ maxWidth: '300px', maxHeight: '250px' }}>
-                <source src={message.text} type="video/mp4" />
+            <video controls style={{ width: "100%",maxWidth:'350px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} >
+                <source  src={message.text} type="video/mp4" />
             </video>
         </Box>
     );

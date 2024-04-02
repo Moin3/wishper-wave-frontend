@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -11,18 +11,19 @@ import { userAuth } from '../../context/AccountProvider';
 import { Box, Typography } from '@mui/material';
 import { useSocket } from '../../context/SocketProvider';
 
+
 const Conversations = ({ users }) => {
   const { setPerson } = userInfo();
   const { user } = userAuth();
   const { onlineUsers } = useSocket();
   const [selectedUser, setSelectedUser] = useState(null);
-  const msgText = "The name of my country is Bangladesh";
 
   const getUser = async (userData) => {
     const response = await postAPI('/conversation/add', { senderId: user?._id, receiverId: userData?._id });
     setPerson(userData);
     setSelectedUser(userData);
   };
+
 
   return (
     <List>
@@ -54,9 +55,7 @@ const Conversations = ({ users }) => {
                   <Typography sx={{ textTransform: 'capitalize', fontWeight: '700', fontFamily: "Quicksand" }}>
                     {`${userData?.first_name} ${userData?.last_name}`}
                   </Typography>
-                  <Typography sx={{ fontSize: 'small', letterSpacing: '.5px', fontWeight: '500', fontFamily: "Quicksand" }}>
-                    {msgText.slice(0, 17) + '...'}
-                  </Typography>
+
                   {isOnline ? (
                     <Typography sx={{ fontSize: 'small', color: 'green', fontFamily: "Quicksand", fontWeight: '500' }}>Online</Typography>
                   ) : (
@@ -69,6 +68,7 @@ const Conversations = ({ users }) => {
         )
       })}
     </List>
+    
   );
 };
 

@@ -7,6 +7,7 @@ const MsgProvider = ({children}) => {
     const [msgText,setMsgText]=useState('')
     const [msgId,setMsgId]=useState('')
     const [messages,setMessages]=useState(null)
+    const [lastMsg,setLastMsg]=useState(null)
     
     return (
         <MsgContext.Provider value={{
@@ -15,7 +16,9 @@ const MsgProvider = ({children}) => {
             msgId,
             setMsgId,
             messages,
-            setMessages
+            setMessages,
+            lastMsg,
+            setLastMsg
          }}>
             {children}
         </MsgContext.Provider>
