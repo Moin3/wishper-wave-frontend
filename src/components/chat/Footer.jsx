@@ -57,7 +57,7 @@ const Footer = ({conversationId}) => {
     
 
     useEffect(()=>{
-        socket.on("getMessage",data=>{
+        socket?.on("getMessage",data=>{
             setMessages({
                 ...data,
                 createdAt:Date.now()
