@@ -1,7 +1,7 @@
 {
   "name": "client",
   "private": true,
-  "proxy": "http://localhost:8000",
+  "proxy": "https://wishper-wave-backend-1.onrender.com",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
