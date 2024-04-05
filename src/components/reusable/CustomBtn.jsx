@@ -15,7 +15,7 @@ const CustomBtn = ({label,isLoading}) => {
           '&:hover':{backgroundColor: '#b21eb2'}
         }}
     >
-        {isLoading ? label : "Loading..."}
+        {isLoading ? "Loading..." : label}
     </Button>
   )
 }

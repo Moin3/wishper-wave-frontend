@@ -49,12 +49,12 @@ export default function SignIn() {
         const response=signInUser.data
           if(response.success){
             toast.success(response.msg)
-            setLoading(false)
             navigate('/')
             localStorage.setItem('token',JSON.stringify(response.token))
             localStorage.setItem('user',JSON.stringify(response.user))
             setToken(response.token)
             setUser(response.user)
+            setLoading(false)
           }
       }else{
         toast.error('Fill up all field')
