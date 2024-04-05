@@ -9,6 +9,7 @@ import { postAPI } from '../../services/api';
 import {toast} from 'react-hot-toast'
 import { useEffect, useState } from 'react';
 import { useSocket } from '../../context/SocketProvider';
+import Spinner from '../reusable/Spinner';
 
 
 
@@ -161,9 +162,11 @@ const Footer = ({conversationId}) => {
                 />
             </Search>
             {
-               (msgText || image) ? 
+                msgText ? 
                 (<IconButton sx={{cursor:'pointer'}} onClick={handleMsgSend} color="secondary">
-                    <SendIcon />
+                   {
+                    image === '' ? <Spinner/> : <SendIcon />
+                   } 
                 </IconButton>)
                  : 
                 ( <IconButton sx={{cursor:'pointer'}} color="secondary">
