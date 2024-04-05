@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import EmptyChatBox from '../components/chat/EmptyChatBox';
 import ChatBox from '../components/chat/ChatBox';
 import { userInfo } from '../context/UserProvider';
-import Menus from '../components/menu/Menus';
+import Menus from '../components/Menu/Menus';
 
 function ChattingPage(props) {
   const { person } = userInfo();
