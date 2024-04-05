@@ -161,7 +161,7 @@ const Footer = ({conversationId}) => {
                 />
             </Search>
             {
-                msgText ? 
+               (msgText || image) ? 
                 (<IconButton sx={{cursor:'pointer'}} onClick={handleMsgSend} color="secondary">
                     <SendIcon />
                 </IconButton>)
