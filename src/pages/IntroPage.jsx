@@ -1,10 +1,10 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
+import Menus from '../components/menu/Menus'; // Corrected import path
 import EmptyChatBox from '../components/chat/EmptyChatBox';
-import Menus from '../components/menu/Menus';
 import { userAuth } from '../context/AccountProvider';
 import { useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
 
 function IntroPage(props) {
     const navigate = useNavigate();
@@ -19,7 +19,7 @@ function IntroPage(props) {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <Menus />
+            <Menus /> {/* Using the Menus component */}
             <EmptyChatBox />
         </Box>
     );
