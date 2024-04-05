@@ -59,7 +59,7 @@ const Menus = () => {
                         alignItems: 'space-between',
                     }}
                 >
-                    <Link onClick={() => setPerson(null)} to="/intro">
+                    <Link onClick={() => setPerson(null)} to="/">
                         <Tooltip title="Intro Page">
                             <Typography
                                 sx={{

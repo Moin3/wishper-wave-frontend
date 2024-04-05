@@ -3,7 +3,7 @@ import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import App from "../App";
 import NotFound from "../pages/NotFound";
-import IntroPage from "../pages/IntroPage";
+// import IntroPage from "../pages/IntroPage";
 
 
 const router = createBrowserRouter([
@@ -20,10 +20,10 @@ const router = createBrowserRouter([
                 path: "/signin",
                 element: <SignIn />,
             },
-            {
-              path: "/intro",
-              element: <IntroPage/>,
-            },
+            // {
+            //   path: "/intro",
+            //   element: <IntroPage/>,
+            // },
             {
             path: "/*",
             element: <NotFound />,
