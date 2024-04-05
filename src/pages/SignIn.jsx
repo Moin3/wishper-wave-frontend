@@ -30,6 +30,7 @@ export default function SignIn() {
   const initialState={email:'',password:''}
   const [userSignIn,setUserSignin]=useState(initialState)
   const {email,password}=userSignIn
+  const [loading,setLoading]=useState(null)
 
 
   const handleChange = (e) => {
@@ -41,12 +42,14 @@ export default function SignIn() {
   const handleSubmit =async (event) => {
     event.preventDefault();
     // setUserSignin(initialState)
+    setLoading(true)
    try{
       if(email && password){
         const signInUser=await postAPI('/signin',userSignIn)
         const response=signInUser.data
           if(response.success){
             toast.success(response.msg)
+            setLoading(false)
             navigate('/')
             localStorage.setItem('token',JSON.stringify(response.token))
             localStorage.setItem('user',JSON.stringify(response.user))
@@ -55,9 +58,11 @@ export default function SignIn() {
           }
       }else{
         toast.error('Fill up all field')
+        setLoading(false)
       }
    }catch(err){
     toast.error(err.response.data.msg)
+    setLoading(false)
    }
     
   };
@@ -113,7 +118,7 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <CustomBtn label={'sign in'}/>
+            <CustomBtn label={'sign in'} isLoading={loading}/>
             <Divider sx={{mb:2}}>
               OR
             </Divider>

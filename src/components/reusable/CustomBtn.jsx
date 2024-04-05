@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '@mui/material/Button';
 
-const CustomBtn = ({label}) => {
+const CustomBtn = ({label,isLoading}) => {
   return (
     <Button
         type="submit"
@@ -15,7 +15,7 @@ const CustomBtn = ({label}) => {
           '&:hover':{backgroundColor: '#b21eb2'}
         }}
     >
-        {label}
+        {isLoading ? label : "Loading..."}
     </Button>
   )
 }

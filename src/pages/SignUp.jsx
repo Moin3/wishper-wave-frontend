@@ -27,6 +27,7 @@ export default function SignUp() {
   const initialState = { first_name: '', last_name: '', email: '', password: '', avatar: '' }
   const [userSignUp, setUserSignUp] = useState(initialState)
   const { first_name, last_name, email, password, avatar } = userSignUp
+  const [loading,setLoading]=useState(null)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,6 +56,7 @@ export default function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true)
     try {
       if (first_name && last_name && email && password && avatar) {
         let avatarURL = null;
@@ -67,12 +69,15 @@ export default function SignUp() {
         if (response.success) {
           toast.success(response.msg)
           navigate('/signin')
+          setLoading(false)
         }
       } else {
         toast.error('Fill up all fields')
+        setLoading(false)
       }
     } catch (err) {
       toast.error(err.response ? err.response.data.msg : 'An error occurred')
+      setLoading(false)
     }
   };
 
@@ -164,7 +169,7 @@ export default function SignUp() {
                   />
                 </Grid>
               </Grid>
-              <CustomBtn label={'sign up'} />
+              <CustomBtn label={'sign up'} isLoading={loading} />
               <Divider sx={{ mb: 2 }}>
                 OR
               </Divider>
