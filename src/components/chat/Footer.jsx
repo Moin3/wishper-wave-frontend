@@ -6,12 +6,10 @@ import { userMsg } from '../../context/MsgProvider';
 import { userAuth } from '../../context/AccountProvider';
 import { userInfo } from '../../context/UserProvider';
 import { postAPI } from '../../services/api';
-import {toast} from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 import { useEffect, useState } from 'react';
 import { useSocket } from '../../context/SocketProvider';
 import Spinner from '../reusable/Spinner';
-
-
 
 const Container = styled(Box)`
     height: 55px;
@@ -39,113 +37,119 @@ const InputField = styled(InputBase)`
     font-size: 14px;
     height: 20px;
     width: 100%;
+
+    /* Add this CSS to remove default border and outline */
+    border: none;
+    outline: none;
 `;
 
 const ClipIcon = styled(AttachFile)`
     transform: rotate(40deg);
-    margin-top:5px;
-    cursor:pointer;
+    margin-top: 5px;
+    cursor: pointer;
 `;
 
+const Footer = ({ conversationId }) => {
+    const { msgText, setMsgText, setMsgId, setMessages } = userMsg();
+    const { user } = userAuth();
+    const { person } = userInfo();
+    const { socket } = useSocket();
+    const [file, setFile] = useState(null);
+    const [image, setImage] = useState(null);
+    const [fileText, setFileText] = useState('');
+    const [loading, setLoading] = useState(false);
 
-const Footer = ({conversationId}) => {
-    const {msgText,setMsgText,setMsgId,setMessages}=userMsg()
-    const {user}=userAuth()
-    const {person}=userInfo()
-    const {socket }=useSocket()
-     const [file,setFile]=useState(null)
-    const [image,setImage]=useState('')
-    
-
-    useEffect(()=>{
-        socket?.on("getMessage",data=>{
+    useEffect(() => {
+        socket?.on("getMessage", data => {
             setMessages({
                 ...data,
-                createdAt:Date.now()
-            })
-        })
-    })
+                createdAt: Date.now()
+            });
+        });
+    }, []);
 
+    const handleMsgSend = async () => {
+        try {
+            let message = {};
+            if (!file) {
+                message = {
+                    senderId: user._id,
+                    recieverId: person._id,
+                    conversationId: conversationId,
+                    type: 'text',
+                    text: msgText
+                };
+            } else {
+                message = {
+                    senderId: user._id,
+                    recieverId: person._id,
+                    conversationId: conversationId,
+                    type: 'file',
+                    text: image
+                };
+            }
 
+            // socket msg send to backend
+            socket.emit('sendMessage', message);
 
-    const handleMsgSend=async ()=>{
-        try{
-            let message={}
-            if(!file){
-                message={
-                senderId:user._id,
-                recieverId:person._id,
-                conversationId:conversationId,
-                type:'text',
-                text:msgText
-            }
-            }
-            else{
-                message={
-                senderId:user._id,
-                recieverId:person._id,
-                conversationId:conversationId,
-                type:'file',
-                text:image
-            }
+            const response = await postAPI('/message/add', message);
+            const isolatedMsg = response.data;
+            setMsgId(isolatedMsg.newMessage._id);
+            toast.success(isolatedMsg.msg);
+        } catch (err) {
+            toast.error(err.message);
         }
 
-        // socket msg send to backend
-        socket.emit('sendMessage', message);
-
-
-        const response=await postAPI('/message/add',message)
-        const isolatedMsg=response.data
-        setMsgId(isolatedMsg.newMessage._id)
-        toast.success(isolatedMsg.msg)
-        }catch(err){
-            toast.error(err.message)
-        }
-
-        setMsgText('')
-        setImage('')
-        setFile(null)
-    }
-
-
-
+        setMsgText('');
+        setImage(null);
+        setFile(null);
+    };
 
     const onFileChange = (e) => {
         setFile(e.target.files[0]);
-        setMsgText(e.target.files[0].name);
-    }
-
+        setFileText(e.target.files[0].name);
+        setLoading(true); // Set loading to true when file is being uploaded
+    };
 
     useEffect(() => {
         const getImage = async () => {
-                if (file) {
-                    const datas = new FormData();
-                    datas.append("file", file);
-                    
-                    try{
-                        const response = await postAPI('/file/upload',datas)
-                        setImage(response.data.imageUrl)
-                    }catch(err){
-                        toast.error(err.message)
+            if (file) {
+                const datas = new FormData();
+                datas.append("file", file);
+
+                try {
+                    const response = await postAPI('/file/upload', datas);
+                    if(response.data.imageUrl){
+                        setMsgText(fileText)
                     }
+                    setImage(response.data.imageUrl);
+                } catch (err) {
+                    toast.error(err.message);
+                } finally {
+                    setLoading(false); // Set loading to false after file upload is completed
                 }
+            }
+        };
+        getImage();
+    }, [file]);
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter' && !event.shiftKey && msgText.trim() !== '' && image !== '') {
+            event.preventDefault(); 
+            handleMsgSend(); 
         }
-        getImage()
-    }, [file])
-
-
+    };
 
     return (
-        
         <Container>
-            <IconButton sx={{cursor:'pointer'}} color="secondary">
+            <IconButton sx={{ cursor: 'pointer' }} color="secondary">
                 <EmojiEmotions />
             </IconButton>
-            <IconButton sx={{cursor:'pointer'}} color="secondary">
+            <IconButton sx={{ cursor: 'pointer' }} color="secondary">
                 <label htmlFor="fileInput">
                     <ClipIcon />
                 </label>
-            </IconButton> 
+            </IconButton>
             <input
                 type='file'
                 id="fileInput"
@@ -157,26 +161,21 @@ const Footer = ({conversationId}) => {
                 <InputField
                     placeholder="Type a message"
                     inputProps={{ 'aria-label': 'search' }}
-                    onChange={(e)=>setMsgText(e.target.value)}
+                    onChange={(e) => setMsgText(e.target.value)}
+                    onKeyPress={handleKeyPress} 
                     value={msgText}
                 />
             </Search>
-            {
-                msgText ? 
-                (<IconButton sx={{cursor:'pointer'}} onClick={handleMsgSend} color="secondary">
-                   {
-                    image === '' ? <Spinner/> : <SendIcon />
-                   } 
-                </IconButton>)
-                 : 
-                ( <IconButton sx={{cursor:'pointer'}} color="secondary">
-                    <Mic />
-                </IconButton>)
-                 
-            }
-            
+            <IconButton
+                sx={{ cursor: 'pointer' }}
+                onClick={handleMsgSend}
+                color="secondary"
+                disabled={!msgText || loading} // Disable button when no message or loading
+            >
+                {loading ? <Spinner /> : <SendIcon />}
+            </IconButton>
         </Container>
-    )
-}
+    );
+};
 
 export default Footer;
