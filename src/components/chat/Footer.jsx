@@ -95,6 +95,7 @@ const Footer = ({ conversationId }) => {
             const response = await postAPI('/message/add', message);
             const isolatedMsg = response.data;
             setMsgId(isolatedMsg.newMessage._id);
+            setMsgText('')
             toast.success(isolatedMsg.msg);
         } catch (err) {
             toast.error(err.message);
