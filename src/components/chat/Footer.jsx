@@ -6,7 +6,7 @@ import { userMsg } from '../../context/MsgProvider';
 import { userAuth } from '../../context/AccountProvider';
 import { userInfo } from '../../context/UserProvider';
 import { postAPI } from '../../services/api';
-import { toast } from 'react-hot-toast'
+import { toast } from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 import { useSocket } from '../../context/SocketProvider';
 import Spinner from '../reusable/Spinner';
@@ -133,7 +133,7 @@ const Footer = ({ conversationId }) => {
         getImage();
     }, [file]);
 
-    const handleKeyPress = (event) => {
+    const handleKeyDown = (event) => {
         if (event.key === 'Enter' && !event.shiftKey && msgText.trim() !== '' && image !== '') {
             event.preventDefault(); 
             handleMsgSend(); 
@@ -162,7 +162,7 @@ const Footer = ({ conversationId }) => {
                     placeholder="Type a message"
                     inputProps={{ 'aria-label': 'search' }}
                     onChange={(e) => setMsgText(e.target.value)}
-                    onKeyPress={handleKeyPress} 
+                    onKeyDown={handleKeyDown} 
                     value={msgText}
                 />
             </Search>
