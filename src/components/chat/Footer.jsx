@@ -69,6 +69,7 @@ const Footer = ({ conversationId }) => {
     }, []);
 
     const handleMsgSend = async () => {
+        setMsgText('');
         try {
             let message = {};
             if (!file) {
@@ -95,13 +96,12 @@ const Footer = ({ conversationId }) => {
             const response = await postAPI('/message/add', message);
             const isolatedMsg = response.data;
             setMsgId(isolatedMsg.newMessage._id);
-            setMsgText('')
             toast.success(isolatedMsg.msg);
         } catch (err) {
             toast.error(err.message);
         }
 
-        setMsgText('');
+        // setMsgText('');
         setImage(null);
         setFile(null);
     };
