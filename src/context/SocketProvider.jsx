@@ -12,7 +12,8 @@ const SocketProvider = ({children}) => {
 
     useEffect(()=>{
         if(user){
-            const socket=io('http://localhost:8000',{
+            // const socket=io('http://localhost:8000',{
+            const socket=io('https://wishper-wave-backend-1.onrender.com',{
                 query:{
                     userId:user._id
                 }
