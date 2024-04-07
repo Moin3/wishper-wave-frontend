@@ -66,11 +66,6 @@ const ImageMessage = ({ message }) => {
             case 'ppt':
             case 'pptx':
                 return 'https://cdn-icons-png.flaticon.com/512/4726/4726016.png';
-            case 'jpg':
-            case 'jpge':
-            case 'png':
-            case 'svg':
-                return 'https://www.freeiconspng.com/uploads/multimedia-photo-icon-31.png';
             case 'mp4':
             case 'mkv':
             case 'wmv':
@@ -84,7 +79,7 @@ const ImageMessage = ({ message }) => {
     };
 
     const getFileType = (fileName) => {
-        const extension = fileName.split('.').pop().toLowerCase();
+        const extension = fileName?.split('.').pop().toLowerCase();
         switch (extension) {
             case 'pdf':
             case 'doc':
@@ -96,10 +91,6 @@ const ImageMessage = ({ message }) => {
             case 'mkv':
             case 'wmv':
             case 'webm':
-            case 'jpg':
-            case 'jpge':
-            case 'png':
-            case 'svg':
                 return extension;
             default:
                 return 'unknown';
@@ -114,12 +105,12 @@ const ImageMessage = ({ message }) => {
             return (
                 <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
                     <img src={getFileIcon(fileType)} alt={`${fileType}-icon`} style={{ width: 60, padding: 6 }} />
-                    <Typography style={{ fontSize: 12, width: '80%', maxWidth: '300px', fontFamily: 'Quicksand', fontWeight: '500' }}>{message.text.split("/").pop()}</Typography>
+                    <Typography style={{ fontSize: 12, width: '80%', maxWidth: '300px', fontFamily: 'Quicksand', fontWeight: '500' }}>{message?.text?.split("/").pop()}</Typography>
                 </Box>
             );
         } else {
             return (
-                <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} src={message.text} alt={`${fileType}-icon`}/>
+                <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} src={message.text} alt={message.text}/>
             );
         }
     };

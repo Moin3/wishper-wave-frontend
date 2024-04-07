@@ -45,7 +45,7 @@ const ChatBox = () => {
             } catch (err) {
                 toast.error(err.message);
             }
-        };
+        }
         getConversationDetails();
     }, [person?._id]);
 
@@ -78,7 +78,7 @@ const ChatBox = () => {
             <Toolbar />
             <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                 {singleIsolatedMsg.length === 0 ? (
-                    <Box sx={{mt:{xs:'35%',sm:'30%',md:"20%"}, px: 2, py: 1,display:'flex',justifyContent:'center',color:"#577799",fontWeight:'bold',fontFamily: "Quicksand" }}>Start your first conversation</Box>
+                    <Box sx={{mt:{xs:'50%',sm:'30%',md:"20%"}, px: 2, py: 1,display:'flex',justifyContent:'center',color:"#577799",fontWeight:'bold',fontFamily: "Quicksand" }}>Start your first conversation</Box>
                 ) : (
                     singleIsolatedMsg.map((msg) => (
                         <Box ref={messagesEndRef} key={msg._id} sx={{ px: 2, py: 1 }}>
