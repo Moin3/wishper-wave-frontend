@@ -66,6 +66,11 @@ const ImageMessage = ({ message }) => {
             case 'ppt':
             case 'pptx':
                 return 'https://cdn-icons-png.flaticon.com/512/4726/4726016.png';
+            case 'jpg':
+            case 'jpge':
+            case 'png':
+            case 'svg':
+                return 'https://www.freeiconspng.com/uploads/multimedia-photo-icon-31.png';
             case 'mp4':
             case 'mkv':
             case 'wmv':
@@ -91,6 +96,10 @@ const ImageMessage = ({ message }) => {
             case 'mkv':
             case 'wmv':
             case 'webm':
+            case 'jpg':
+            case 'jpge':
+            case 'png':
+            case 'svg':
                 return extension;
             default:
                 return 'unknown';
@@ -110,7 +119,7 @@ const ImageMessage = ({ message }) => {
             );
         } else {
             return (
-                <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} src={message.text} alt={message.text}/>
+                <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} src={message.text} alt={`${fileType}-icon`}/>
             );
         }
     };

@@ -39,7 +39,7 @@ const ChatBox = () => {
                     setConversationId(conversationData._id);
                     setConversation(conversationData)
                 } else {
-                    toast.success('First time you open this conversation');
+                    console.log('First time you open this conversation');
                 }
 
             } catch (err) {
@@ -94,7 +94,7 @@ const ChatBox = () => {
                 <Footer conversationId={conversationId} />
             </Box>
         </Box>
-    );
+    )
 };
 
 export default ChatBox;
