@@ -16,18 +16,17 @@ const drawerWidth = 240;
 const ChatBox = () => {
     const [conversationId, setConversationId] = useState();
     const [singleIsolatedMsg, setSingleIsolatedMsg] = useState([]);
-    const { msgId,messages } = userMsg();
+    const { msgId, messages } = userMsg();
     const { person } = userInfo();
     const { user } = userAuth();
     const messagesEndRef = useRef(null);
     const [conversation, setConversation] = useState({});
 
 
-
     useEffect(() => {
-        messages && conversation?.members?.includes(messages.senderId) && 
-        setSingleIsolatedMsg((prev) => [...prev, messages]);
-        
+        messages && conversation?.members?.includes(messages.senderId) &&
+            setSingleIsolatedMsg((prev) => [...prev, messages]);
+
     }, [messages, conversation]);
 
 
@@ -69,21 +68,24 @@ const ChatBox = () => {
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [ singleIsolatedMsg]);
-
+    }, [singleIsolatedMsg]);
 
     return (
         <Box
-      component="main"
-      sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-    >
-      <Toolbar />
-      <Box sx={{ display: 'flex',flexDirection:'column',  height: '100%' }}>
-                {singleIsolatedMsg?.map((msg) => (
-                    <Box ref={messagesEndRef}  key={msg._id} sx={{ px: 2, py: 1 }}>
-                        <Message message={msg} />
-                    </Box>
-                ))}
+            component="main"
+            sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        >
+            <Toolbar />
+            <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                {singleIsolatedMsg.length === 0 ? (
+                    <Box sx={{my:'30%', px: 2, py: 1,display:'flex',justifyContent:'center',alignItems:'center',color:"#577799",fontWeight:'bold',fontFamily: "Quicksand" }}>Start your first conversation</Box>
+                ) : (
+                    singleIsolatedMsg.map((msg) => (
+                        <Box ref={messagesEndRef} key={msg._id} sx={{ px: 2, py: 1 }}>
+                            <Message message={msg} />
+                        </Box>
+                    ))
+                )}
             </Box>
             <Toolbar />
             <Box

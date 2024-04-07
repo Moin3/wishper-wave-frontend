@@ -104,7 +104,7 @@ const Menus = () => {
                 <SearchMenu setSearchText={setSearchText} />
             </Toolbar>
             <Divider />
-            <Conversations users={users} />
+            <Conversations users={users}/>
             <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
         </Box>
     );
