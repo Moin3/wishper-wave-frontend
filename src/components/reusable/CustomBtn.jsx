@@ -10,9 +10,9 @@ const CustomBtn = ({label,isLoading}) => {
         sx={{  
           mt: 3,
           mb: 2 ,
-          backgroundColor: '#990699',
+          backgroundColor: '#577799',
           '&:focus': { outline: 'none' },
-          '&:hover':{backgroundColor: '#b21eb2'}
+          '&:hover':{backgroundColor: '#577485'}
         }}
     >
         {isLoading ? "Loading..." : label}

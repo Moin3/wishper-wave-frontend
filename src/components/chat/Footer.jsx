@@ -13,14 +13,14 @@ import Spinner from '../reusable/Spinner';
 
 const Container = styled(Box)`
     height: 55px;
-    background: #ededed;
+    background: #ebf3fa;
     width: 100%;
     display: flex;
     align-items: center;
     padding: 0 15px;
     &  > * {
         margin: 5px;
-        color: #919191;
+        color: #5d809c;
     }
 `;
 
@@ -37,8 +37,6 @@ const InputField = styled(InputBase)`
     font-size: 14px;
     height: 20px;
     width: 100%;
-
-    /* Add this CSS to remove default border and outline */
     border: none;
     outline: none;
 `;

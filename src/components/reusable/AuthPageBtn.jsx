@@ -28,8 +28,8 @@ export default function GroupSizesColors() {
           <Link key={path} to={path}>
             <Button
               sx={{
-                '&:hover': { backgroundColor: location.pathname === path ? '#990699' : 'inherit' },
-                backgroundColor: location.pathname === path ? '#990699' : 'inherit',
+                '&:hover': { backgroundColor: location.pathname === path ? '#577799' : 'inherit' },
+                backgroundColor: location.pathname === path ? '#577799' : 'inherit',
                 color: location.pathname === path ? '#ffffff' : 'black'
               }}
             >
