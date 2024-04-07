@@ -110,7 +110,7 @@ const ImageMessage = ({ message }) => {
             );
         } else {
             return (
-                <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} src={message.text} alt={message.text}/>
+                <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} src={message.text} alt={"Render:ephemeral filesystem"}/>
             );
         }
     };
