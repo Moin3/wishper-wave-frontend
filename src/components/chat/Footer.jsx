@@ -13,7 +13,7 @@ import Spinner from '../reusable/Spinner';
 
 const Container = styled(Box)`
     height: 55px;
-    background: #ebf3fa;
+    background: #c5d3de;
     width: 100%;
     display: flex;
     align-items: center;
@@ -141,10 +141,10 @@ const Footer = ({ conversationId }) => {
 
     return (
         <Container>
-            <IconButton sx={{ cursor: 'pointer' }} color="secondary">
+            <IconButton sx={{ cursor: 'pointer' }} color="#5d809c">
                 <EmojiEmotions />
             </IconButton>
-            <IconButton sx={{ cursor: 'pointer' }} color="secondary">
+            <IconButton sx={{ cursor: 'pointer' }} color="#5d809c" >
                 <label htmlFor="fileInput">
                     <ClipIcon />
                 </label>
@@ -168,7 +168,7 @@ const Footer = ({ conversationId }) => {
             <IconButton
                 sx={{ cursor: 'pointer' }}
                 onClick={handleMsgSend}
-                color="secondary"
+                color="#5d809c"
                 disabled={!msgText || loading} // Disable button when no message or loading
             >
                 {loading ? <Spinner /> : <SendIcon />}

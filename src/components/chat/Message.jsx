@@ -110,7 +110,7 @@ const ImageMessage = ({ message }) => {
             );
         } else {
             return (
-                <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain' }} src={message.text} alt={"Render:ephemeral filesystem"}/>
+                <img style={{ width: "100%",maxWidth:'300px', height: '100%',maxHeight:'250px', objectFit: 'contain',fontFamily: 'Quicksand',fontSize:'12px',fontWeight:'600' }} src={message.text} alt={"Render,ephemeral filesystem:any file written to the instance after it has booted will be lost when it next restarts "}/>
             );
         }
     };
