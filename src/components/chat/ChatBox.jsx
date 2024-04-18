@@ -9,6 +9,8 @@ import { userInfo } from '../../context/UserProvider';
 import { userAuth } from '../../context/AccountProvider';
 import Message from './Message';
 import { userMsg } from '../../context/MsgProvider';
+import EmojiPicker from 'emoji-picker-react';
+
 
 
 const drawerWidth = 240;
@@ -16,11 +18,17 @@ const drawerWidth = 240;
 const ChatBox = () => {
     const [conversationId, setConversationId] = useState();
     const [singleIsolatedMsg, setSingleIsolatedMsg] = useState([]);
-    const { msgId, messages } = userMsg();
+    const { msgId, messages, open,setMsgText,setOpen } = userMsg();
     const { person } = userInfo();
     const { user } = userAuth();
     const messagesEndRef = useRef(null);
     const [conversation, setConversation] = useState({});
+
+    const handleEmoji=(e)=>{
+        setMsgText(prev=> prev+e.emoji)
+        setOpen(false)
+    }
+    
 
 
     useEffect(() => {
@@ -88,6 +96,9 @@ const ChatBox = () => {
                 )}
             </Box>
             <Toolbar />
+            <Box sx={{position:'fixed',bottom:0,mb:7}}>
+                <EmojiPicker width={250} height={330} searchDisabled={true} skinTonesDisabled={true} open={open} onEmojiClick={handleEmoji}/>
+            </Box>
             <Box
                 sx={{ width: { xs: '100%', sm: `calc(100% - ${drawerWidth}px)` }, position: 'fixed', bottom: 0, right: 0 }}
             >

@@ -6,6 +6,7 @@ const MsgProvider = ({children}) => {
 
     const [msgText,setMsgText]=useState('')
     const [msgId,setMsgId]=useState('')
+    const [open,setOpen]=useState(false)
     const [messages,setMessages]=useState(null)
 
     
@@ -17,6 +18,8 @@ const MsgProvider = ({children}) => {
             setMsgId,
             messages,
             setMessages,
+            open,
+            setOpen
          }}>
             {children}
         </MsgContext.Provider>

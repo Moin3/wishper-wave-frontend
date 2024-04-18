@@ -48,7 +48,7 @@ const ClipIcon = styled(AttachFile)`
 `;
 
 const Footer = ({ conversationId }) => {
-    const { msgText, setMsgText, setMsgId, setMessages } = userMsg();
+    const { msgText, setMsgText, setMsgId, setMessages,setOpen} = userMsg();
     const { user } = userAuth();
     const { person } = userInfo();
     const { socket } = useSocket();
@@ -141,7 +141,7 @@ const Footer = ({ conversationId }) => {
 
     return (
         <Container>
-            <IconButton sx={{ cursor: 'pointer' }} color="#5d809c">
+            <IconButton sx={{ cursor: 'pointer' }} color="#5d809c" onClick={()=>setOpen(prev => !prev)}>
                 <EmojiEmotions />
             </IconButton>
             <IconButton sx={{ cursor: 'pointer' }} color="#5d809c" >
