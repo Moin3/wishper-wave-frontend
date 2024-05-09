@@ -12,7 +12,7 @@ Welcome to WhisperWave, a chat application designed for seamless communication. 
 Install WishperWave with npm
 
 ```bash
-  git clone https://github.com/Moin3/wishper-wave-frontend.git
+  git clone https://github.com/dev-moinislam/wishper-wave-frontend.git
   cd client
   npm Install
 ```
